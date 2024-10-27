@@ -48,7 +48,7 @@ What if this can be done digitally? This is the core idea of the HCC module. The
 
 [Video Link (alternate)](https://new.express.adobe.com/id/urn:aaid:sc:AP:df25a095-c0d0-445a-ba83-eb3c713d7d24?invite=true&promoid=Z2G1FQKR&mv=other)
 
-Both the links point to the same video. In case both the links don't not work, please contact me through whatsapp/email or any other means.
+Both the links point to the same video. In case both the links don't work, please contact me through whatsapp/email or any other means.
 
 <p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
 
