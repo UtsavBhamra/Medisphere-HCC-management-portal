@@ -44,9 +44,11 @@ What if this can be done digitally? This is the core idea of the HCC module. The
 <!-- Video -->
 ## Video
 
-[Video Link](https://new.express.adobe.com/id/urn:aaid:sc:AP:df25a095-c0d0-445a-ba83-eb3c713d7d24?invite=true&promoid=Z2G1FQKR&mv=other)
+[Video Link](https://drive.google.com/file/d/1-UXFlhJ_S9J-HQar8o3j_atGSXvyf_zZ/view?usp=sharing)
 
-In case the link does not work, please contact me through whatsapp/email or any other means.
+[Video Link (alternate)](https://new.express.adobe.com/id/urn:aaid:sc:AP:df25a095-c0d0-445a-ba83-eb3c713d7d24?invite=true&promoid=Z2G1FQKR&mv=other)
+
+Both the links point to the same video. In case both the links don't not work, please contact me through whatsapp/email or any other means.
 
 <p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
 
@@ -194,6 +196,7 @@ Dockerized the web app to ensure availabilty across different operating systems 
 ## List of known bugs
 
 1. While running the app through docker/docker-compose, any tailwind classes added do not generate the correspondng CSS. We need to run the tailwind:watch script as well but that was causing some issues with my docker setup.
+2. In the student appointment creation page, for the time slot select to work, the page needs to be reloaded once
 
 
 <p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
