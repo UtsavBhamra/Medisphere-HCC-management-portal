@@ -5,8 +5,8 @@
   <summary>Table of Contents</summary>
   
   - [About the Project](#about-the-project)
+  - [Video](#video)
   - [Getting Started](#getting-started)
-  - [Usage](#usage)
   - [List of Implemented feautures](#list-of-implemented-features)
   - [List of Non Implemented/Planned Features](#list-of-non-implementedplanned-features)
   - [List of Known Bugs](#list-of-known-bugs)
@@ -24,7 +24,7 @@ Often, Students have to wait for their turn at the Health Care Center and it is 
 What if this can be done digitally? This is the core idea of the HCC module. The module will allow students to book appointments online based on the Doctor’s availability. Additionally, students can generate a leave/absence letter that goes through two levels of approval —first from the HCC in charge and then from the Dean of Student Welfare. The system should notify the relevant approvers when a new leave slip is awaiting approval. Once fully approved, the student will receive a confirmation with the signed leave slip. 
 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
 
 
 
@@ -38,17 +38,17 @@ What if this can be done digitally? This is the core idea of the HCC module. The
 * [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
 * [![DaisyUI][DaisyUI]][DaisyUI-url]
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
 
 
 <!-- Video -->
 ## Video
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+[Video Link](https://new.express.adobe.com/id/urn:aaid:sc:AP:df25a095-c0d0-445a-ba83-eb3c713d7d24?invite=true&promoid=Z2G1FQKR&mv=other)
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+In case the link does not work, please contact me through whatsapp/email or any other means.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
 
 ## Getting Started
 
@@ -71,7 +71,7 @@ There are two ways to set up the app- either through docker (this method enables
 3. NPM and nodejs
 4. A ruby version manager (not compulsory), preferably `rvm` or `rbenv`
  
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
 
 ### Installation
 
@@ -111,9 +111,9 @@ bin/dev
 ```
 7.Access the application at http://localhost:3000
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 _**Note**: The current docker setup does not support live reloading of CSS. You need to precompile the assets (See step 2 in docker setup) and then rebuild the images and containers for the changes to be reflected. However, this is not an issue with local setup as it uses the bin/dev script_
+
+<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
 
 
 <!-- List of Implemented Features -->
@@ -179,7 +179,7 @@ Dockerized the web app to ensure availabilty across different operating systems 
 
 </details>
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
 
 <!-- List of non-implemented/planned features -->
 ## List of non-implemented/planned features
@@ -196,7 +196,7 @@ Dockerized the web app to ensure availabilty across different operating systems 
 1. While running the app through docker/docker-compose, any tailwind classes added do not generate the correspondng CSS. We need to run the tailwind:watch script as well but that was causing some issues with my docker setup.
 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
 
 <!-- References used -->
 ## References Used
@@ -212,7 +212,7 @@ Dockerized the web app to ensure availabilty across different operating systems 
 * Lots of [Medium](https://medium.com/) and [DEV Community](https://dev.to/) articles 
 * [Reddit](https://www.reddit.com/) and [Stack Overflow](https://stackoverflow.com/)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
 
 <!-- Other Projects -->
 ## Other Projects
@@ -221,7 +221,7 @@ Dockerized the web app to ensure availabilty across different operating systems 
 2. [Blog site and Blog migration for IEEE NITK Corpus](https://github.com/UtsavBhamra/ieee_corpus_blog)
 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
 
 
 
