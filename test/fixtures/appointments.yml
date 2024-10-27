@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  reason: MyString
+  preferred_slot: 2024-10-15 21:53:29
+  severity: MyString
+
+two:
+  name: MyString
+  reason: MyString
+  preferred_slot: 2024-10-15 21:53:29
+  severity: MyString

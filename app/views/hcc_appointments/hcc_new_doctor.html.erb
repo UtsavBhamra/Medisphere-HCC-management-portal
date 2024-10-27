@@ -1,0 +1,23 @@
+<h1 class="my-4 ml-4 text-3xl text-[#163269]">Add Doctor</h1>
+
+<%= form_with(model: @doctor,url: hcc_create_doctor_path,method: :post) do |f| %>
+
+    <%= f.label :name ,class: "ml-4 text-[#163269]"%>
+    <%= f.text_field :name %><br><br>
+
+    <%= f.label :speciality,class: "ml-4 text-[#163269]" %>
+    <%= f.text_field :speciality %><br><br>
+
+    <h4 class="ml-4 text-[#163269]"> Select Available slots </h6>
+    <%= f.collection_check_boxes :time_slot_ids, @time_slots, :id, :name do |cb| %>
+        <div class="ml-4">
+            <%= cb.check_box %> 
+            <%= cb.label %>
+        </div>
+    <% end %>
+
+    <%= f.submit "Add Doctor",class: "text-white btn btn-info btn-active mt-6 ml-4 rounded-2xl" %><br><br>
+
+<% end %>
+
+<%= link_to "Back to All Doctors",hcc_view_doctors_time_slots_path, class: "btn btn-active btn-ghost ml-4 mt-6" %>

@@ -1,0 +1,29 @@
+<h3 class="text-3xl text-[#163269] mt-6 ml-4"> Requested by: <%= @leave_letter.appointment.student.user.name %> </h3>
+
+<p class = "text-[#163269] ml-4 mt-2"> Title: <%= @leave_letter.title %></p>
+
+<p class="text-[#163269] ml-4 mt-4"> Applicant response:</p>
+<p class="bg-gray-100 mx-4 p-4 rounded-xl"><%= @leave_letter.applicant_response %></p>
+
+<p class = "text-[#163269] ml-4 mt-2"> Start Date: <%= @leave_letter.start_date %></p>
+<p class = "text-[#163269] ml-4 mt-2"> End Date: <%= @leave_letter.end_date %></p>
+<p class = "text-[#163269] ml-4 mt-2"> Status: <%= @leave_letter.status %></p><br></p>
+
+<p class= "text-[#163269] mt-2 ml-4">Remarks by HCC: </p><br>
+<textarea class = "text ml-4 textarea textarea-warning"><%= @leave_letter.hcc_comments %></textarea><br>
+
+<h3 class= "text-[#163269] mt-2 ml-4">DSW Comments -</h3>
+<%= form_with model: @leave_letter, url: dsw_add_leave_letter_comments_path(@leave_letter),method: :patch do |f| %>
+  <%= f.text_area :dsw_comments, class: "text ml-4 textarea textarea-warning" %>  <br>
+  <%= f.submit "Add Comment", class: "btn btn-outline btn-ghost btn-xs ml-4" %>
+<% end %>
+
+<br>
+
+<% if @leave_letter.status== "forwarded" %>
+<%= form_with url: dsw_approve_leave_letter_path(@leave_letter), method: :post do %>
+    <%= submit_tag "Approve Leave Letter",class: "text-white btn btn-info btn-active mt-2 ml-4 rounded-2xl" %>
+<% end %>
+<% end %>
+
+<%= link_to "Back to Leave Letters",dsw_view_leave_letters_path,class: "btn btn-active btn-ghost ml-4 mt-6"  %>

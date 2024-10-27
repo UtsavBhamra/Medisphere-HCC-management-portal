@@ -1,0 +1,18 @@
+<h3 class="text-3xl text-[#163269] mt-6 ml-4"> Requested by: <%= @leave_letter.appointment.student.user.name %> </h3>
+
+<p class = "text-[#163269] ml-4 mt-2"> Title: <%= @leave_letter.title %></p>
+
+<p class="text-[#163269] ml-4 mt-4"> Applicant response:</p>
+<p class="bg-gray-100 mx-4 p-4 rounded-xl"><%= @leave_letter.applicant_response %></p>
+
+<p class = "text-[#163269] ml-4 mt-2"> Start Date: <%= @leave_letter.start_date %></p>
+<p class = "text-[#163269] ml-4 mt-2"> End Date: <%= @leave_letter.end_date %></p>
+<p class = "text-[#163269] ml-4 mt-2"> Status: <%= @leave_letter.status %></p><br>
+
+<p class= "text-[#163269] mt-2 ml-4">Remarks by HCC: </p><br>
+<textarea class = "text ml-4 textarea textarea-warning"><%= @leave_letter.hcc_comments %></textarea><br>
+
+<p class= "text-[#163269] mt-2 ml-4">Remarks by DSW: </p><br>
+<textarea class = "text ml-4 textarea textarea-warning"> <%= @leave_letter.dsw_comments %></textarea><br>
+
+<%= link_to "Back to leave letters",student_view_leave_letters_path,class: "btn btn-active btn-ghost ml-4 mt-4" %>

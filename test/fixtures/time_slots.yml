@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  day: 2024-10-22
+  begin: 2024-10-22 01:55:51
+  end: 2024-10-22 01:55:51
+
+two:
+  day: 2024-10-22
+  begin: 2024-10-22 01:55:51
+  end: 2024-10-22 01:55:51

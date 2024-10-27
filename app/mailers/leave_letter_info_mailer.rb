@@ -1,0 +1,2 @@
+class LeaveLetterInfoMailer < ApplicationMailer
+end

@@ -1,0 +1,34 @@
+<h2 class="text-3xl text-[#163269] mt-6 ml-4"> Requested by: <%= @appointment.student.user.name %> </h3>
+
+<p class = "text-[#163269] ml-4 mt-4"> Reason: <%= @appointment.reason %></p>
+
+<p class = "text-[#163269] ml-4 mt-4"> Severity: <%= @appointment.severity %> </p>
+
+<p class = "text-[#163269] ml-4"> Doctor: <%= @appointment.doctor.name %> </p>
+
+<p class = "text-[#163269] ml-4"> TimeSlot : <%= @appointment.time_slot.name %> <%= @appointment.time_slot.day %> </p>
+
+<h3 class = "text-[#163269] ml-4 mt-4">HCC Comments -</h3>
+<%= form_with model: @appointment, url: hcc_add_appointment_comments_path(@appointment),method: :patch do |f| %>
+  <%= f.text_area :hcc_comments, class: "text ml-4 textarea textarea-warning" %>  <br>
+  <%= f.submit "Add Comment", class: "btn btn-outline btn-ghost btn-xs ml-4" %>
+<% end %>
+
+<br>
+
+<div class="flex">
+<% if @appointment.approved==false %>
+<%= form_with url: hcc_approve_appointment_path(@appointment), method: :patch do %>
+  <%= submit_tag "Approve Appointment" ,class: "text-white btn btn-info btn-active ml-4 mr-2 rounded-2xl"%>
+<% end %>
+<% end %>
+
+<% if @appointment.approved==true and @appointment.visited==false %>
+<%= form_with url: hcc_mark_visited_path(@appointment), method: :patch do %>
+  <%= submit_tag "Mark Visited" ,class: "text-white btn btn-info btn-active ml-2 rounded-2xl" %>
+<% end %>
+<% end %>
+</div>
+
+<%= link_to "Back to All Appointments",hcc_view_appointments_path,class: "btn btn-active btn-ghost ml-4 mt-6" %>
+

@@ -1,0 +1,129 @@
+<h2 class="ml-[800px] w-[100px] text-[#2563eb]">Sign up</h2>
+
+<div class="w-[300px] ml-[700px]">
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :name %><br/>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+      <%= f.label :role, "Select Your Role:" %><br />
+      <div>
+        <label>
+          <%= f.radio_button :role, "student", onclick: "toggleRoleFields()" %>
+          Student<br>
+        </label>
+        <label>
+          <%= f.radio_button :role, "hcc_in_charge", onclick: "toggleRoleFields()" %>
+          HCC In Charge<br>
+        </label>
+        <label>
+          <%= f.radio_button :role, "dsw", onclick: "toggleRoleFields()" %>
+          Dean Student Welfare<br>
+        </label>
+      </div>
+    </div>
+
+  <div id="student-fields" class="hidden">
+    <h3 class="mt-4 text-[#2563eb]">Student Information</h3>
+    <div class="field">
+      <%= f.fields_for @student do |student_fields| %>
+        <%= student_fields.label :student_id %> ID
+        <%= student_fields.text_field :student_id %><br><br>
+
+        <%= student_fields.label :department %>
+        <%= student_fields.select :department, Student.departments.keys.map { |dept| [dept.titleize, dept] } %><br><br>
+
+        <%= student_fields.label :program_type %>
+        <%= student_fields.select :program_type, Student.program_types.keys.map { |type| [type.titleize, type] } %><br>
+      <% end %>
+    </div>
+  </div>
+
+  <div id="hcc_in_charge-fields" class="hidden">
+    <h3 class="mt-4 text-[#2563eb]">HCC In Charge Information</h3>
+    <div class="field">
+      <%= f.fields_for @hcc_in_charge do |hcc_fields| %>
+        <%= hcc_fields.label :staff_id %> ID<br />
+        <%= hcc_fields.text_field :staff_id %>
+      <% end %>
+    </div>
+  </div>
+
+  <div id="dsw-fields" class="hidden">
+    <h3 class="mt-4 text-[#2563eb]">Dean Student Welfare Information</h3>
+    <div class="field">
+      <%= f.fields_for @dsw do |dsw_fields| %>
+        <%= dsw_fields.label :staff_id %> ID<br />
+        <%= dsw_fields.text_field :staff_id %>
+      <% end %>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="actions">
+    <%= f.submit "Sign up", class: "bg-[#2563eb] text-white px-6 py-2 rounded-md mb-[10px]" %>
+  </div>
+<% end %>
+
+<div class="text-[#2563eb] underline">
+<%= render "devise/shared/links", class: "btn btn-active btn-ghost ml-4 mt-6" %>
+</div>
+</div>
+
+
+
+
+<script>
+
+const toggleRoleFields = () => {
+
+  const selectedRole = document.querySelector("input[name='user[role]']:checked");
+  console.log(selectedRole)
+
+  document.getElementById("student-fields").classList.add("hidden");
+  document.getElementById("hcc_in_charge-fields").classList.add("hidden");
+  document.getElementById("dsw-fields").classList.add("hidden");
+
+  if (selectedRole) {
+    const role = selectedRole.value;
+    console.log(role);
+    if (role === "student") {
+      console.log(1);
+      document.getElementById("student-fields").classList.remove("hidden");
+    } else if (role === "hcc_in_charge") {
+      console.log(2);
+      document.getElementById("hcc_in_charge-fields").classList.remove("hidden");
+    } else if (role === "dsw") {
+      console.log(3);
+      document.getElementById("dsw-fields").classList.remove("hidden");
+    }
+  }
+};
+
+document.addEventListener("DOMContentLoaded", toggleRoleFields);
+
+</script>
+

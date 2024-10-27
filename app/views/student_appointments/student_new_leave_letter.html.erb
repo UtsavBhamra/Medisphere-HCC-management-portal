@@ -1,0 +1,23 @@
+<h1 class="mt-4 ml-4 text-3xl text-[#163269]">Create New Leave Letter </h1>
+
+<div class="mt-4 ml-4">
+<%= form_with(model: @leave_letter,url: student_create_leave_letter_path(@appointment_id),method: :post) do |f| %>
+
+    <%= f.label :title,class: "text-[#163269]" %><br>
+    <%= f.text_field :title %><br><br>
+
+    <%= f.label :applicant_response,class: "text-[#163269]" %><br>
+    <%= f.text_area :applicant_response %><br><br>
+
+    <%= f.label :start_date,class: "text-[#163269]" %>
+    <%= f.date_field :start_date %><br><br>
+
+    <%= f.label :end_date,class: "text-[#163269]" %>
+    <%= f.date_field :end_date %><br><br>
+
+    <%= f.submit "Submit Leave Letter",class: "text-white btn btn-info btn-active mt-6 rounded-2xl" %><br><br>
+
+<% end %>
+</div>
+
+<%= link_to "Back to leave letters",student_view_leave_letters_path, class: "btn btn-active btn-ghost ml-4 mt-4"%>

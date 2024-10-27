@@ -1,0 +1,18 @@
+<%= link_to "Add doctors +",hcc_new_doctor_path,class: "text-white btn btn-info btn-active mt-6 ml-4 rounded-2xl" %><br>
+<%= link_to "Add Time Slots +",hcc_new_time_slot_path,class: "text-white btn btn-info btn-active mt-6 ml-4 rounded-2xl" %>
+
+<h3 class="my-4 ml-4 text-3xl text-[#163269]">All Doctors- </h3>
+<ul class="list-decimal ml-8">
+    <% @doctors.each do |doc| %>
+        <li><%= doc.name %> <p class="badge badge-info text-white"><%= doc.speciality %></p> </li>
+    <% end %>
+</ul>
+
+<h3 class="my-4 ml-4 text-3xl text-[#163269]">All TimeSlots- </h3>
+<ul class="list-decimal ml-8">
+    <% @time_slots.each do |ts| %>
+        <li><%= ts.day %>  From: <%= ts.begin %> To: <%= ts.end %></li>
+    <% end %>
+</ul>
+
+<%= link_to "Back to Dash",root_path,class: "btn btn-active btn-ghost ml-4 mt-6" %>

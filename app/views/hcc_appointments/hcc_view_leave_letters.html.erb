@@ -1,0 +1,25 @@
+<h1 class="mt-4 ml-4 text-3xl text-[#163269]">Requested Leave letters</h1>
+
+<ul class="list-decimal ml-8 mt-4">
+<% @leave_letters.where(status:0).each do |ll| %>
+    <li>
+        <h3><%= ll.appointment.student.user.name %></h3>
+        <%= ll.title %>
+        <%= link_to "View",hcc_view_particular_leave_letter_path(ll.id),class: "btn btn-outline btn-ghost btn-xs" %>
+    </li>
+<% end %>
+</ul>
+
+<h1 class="mt-4 ml-4 text-3xl text-[#163269]">Forwarded Leave letters</h1>
+
+<ul class="list-decimal ml-8 mt-4">
+<% @leave_letters.where(status:1).each do |ll| %>
+    <li>
+        <h3><%= ll.appointment.student.user.name %></h3>
+        <%= ll.title %>
+        <%= link_to "View",hcc_view_particular_leave_letter_path(ll.id),class: "btn btn-outline btn-ghost btn-xs" %>
+    </li>
+<% end %>
+</ul>
+
+<%= link_to "Back to Dashboard",root_path, class: "btn btn-active btn-ghost ml-4 mt-6" %>

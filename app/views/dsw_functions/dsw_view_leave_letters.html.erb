@@ -1,0 +1,9 @@
+<h1 class="my-4 ml-4 text-3xl text-[#163269]">All pending leave letters</h1>
+
+<ul class="list-decimal ml-8">
+<% @leave_letters.each do |ll| %>
+    <li><%= ll.title %>  <%= link_to "View",dsw_view_particular_leave_letter_path(ll.id),class: "btn btn-outline btn-ghost btn-xs" %></li>
+<% end %>
+</ul>
+
+<%= link_to "Back to Dashboard", root_path, class: "btn btn-active btn-ghost ml-4 mt-6" %>

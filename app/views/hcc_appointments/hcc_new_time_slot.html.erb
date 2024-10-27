@@ -1,0 +1,21 @@
+<h1 class="my-4 ml-4 text-3xl text-[#163269]"> Add New Time Slot </h1>
+
+<%= form_with model: @time_slot, url: hcc_create_time_slot_path,method: :post do |f| %>
+
+    <%= f.label :name,class: "ml-4 text-[#163269]" %>
+    <%= f.text_field :name %><br><br>
+
+    <%= f.label :day, class: "ml-4 text-[#163269]" %>
+    <%= f.text_field :day %><br><br>
+
+    <%= f.label :begin ,class: "ml-4 text-[#163269]"%>
+    <%= f.time_field :begin %><br><br>
+
+    <%= f.label :end,class: "ml-4 text-[#163269]" %>
+    <%= f.time_field :end %><br><br>
+
+    <%= f.submit "Add Time Slot",class: "text-white btn btn-info btn-active mt-6 ml-4 rounded-2xl" %><br><br>
+    
+<% end %>
+
+<%= link_to "Back to All Doctors",hcc_view_doctors_time_slots_path, class: "btn btn-active btn-ghost ml-4 " %>

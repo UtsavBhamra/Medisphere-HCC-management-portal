@@ -1,0 +1,2 @@
+module HccAppointmentsHelper
+end

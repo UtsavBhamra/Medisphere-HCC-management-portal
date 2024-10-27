@@ -1,0 +1,17 @@
+<h1 class="mt-4 ml-4 text-3xl text-[#163269]">Manage Leave letters - </h1>
+
+<div class="ml-10 mt-4">
+<ul class="list-decimal">
+<% @all_appointments.each do |app| %>
+<li><%= app.reason %>
+<% if app.leave_letter %>
+<%= link_to "View leave letter",student_view_particular_leave_letter_path(app.leave_letter), class: "btn btn-outline btn-ghost btn-xs" %>
+<% else %>
+<%= link_to "Create Leave letter",student_new_leave_letter_path(appoint_id: app.id), class: "btn btn-outline btn-ghost btn-xs" %>
+<% end %>
+</li> <br>
+<% end %>
+</ul>
+</div>
+
+<%= link_to "Back to dashboard",root_path, class: "btn btn-active btn-ghost ml-4" %>

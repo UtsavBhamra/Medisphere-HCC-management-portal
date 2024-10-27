@@ -1,0 +1,16 @@
+<%= link_to "Create New Appointment +",student_new_appointment_path,class: "text-white btn btn-info btn-active mt-6 ml-4 rounded-2xl" %>
+
+<div class="ml-10">
+<h1 class="mt-4 text-3xl text-[#163269]">All Appointments - </h1><br>
+
+<% if @all_appointments %> 
+<ul class="list-decimal">
+<% @all_appointments.each do |app| %>
+<li><%= app.reason %> <%= link_to "View",student_view_particular_appointment_path(app.id), class: "btn btn-outline btn-ghost btn-xs" %></li><br> 
+<% end %>
+</ul>
+<br>
+</div>
+<% end %>
+
+<%= link_to "Back to Dashboard",root_path,class: "btn btn-active btn-ghost ml-4" %>

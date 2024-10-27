@@ -1,0 +1,14 @@
+<% if user_signed_in? %>
+
+<div class="flex flex-col items-center h-4/6">
+<%= image_tag "nitk_logo.png" , alt:"NITK logo",class: "w-full" %>
+<%= image_tag "nitk_mb.jpg" , alt:"NITK main building",class: "w-full" %>
+</div>
+
+<div class="flex w-full flex-col lg:flex-row px-10 mt-10 gap-4">
+<%= link_to "Manage Leave Letters",dsw_view_leave_letters_path, class: "card bg-base-300 rounded-box grid h-40 flex-grow place-items-center text-3xl text-[#163269] hover:bg-gray-300" %>
+</div>
+
+<% else %>
+<%= link_to "Sign Up",new_user_session_path %>
+<% end %>

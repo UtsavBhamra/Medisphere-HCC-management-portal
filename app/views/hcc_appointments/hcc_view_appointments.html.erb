@@ -1,0 +1,45 @@
+<div class="ml-6">
+  <h1 class="mt-4 ml-4 text-3xl text-[#163269]">Requested Student Appointments</h1>
+
+  <ul class="ml-8 mt-2 list-decimal">
+    <% @students.each do |s| %>
+      <li>
+        <% if s.appointments.present? %>
+          <h3><%= s.user.name %></h3>
+          <ul class="list-disc">
+            <% s.appointments.where(approved: false).each do |app| %>
+              <li class="ml-4 mb-2">
+                <%= app.reason %>
+                <%= link_to "View", hcc_view_particular_appointment_path(app.id), class: "btn btn-outline btn-ghost btn-xs" %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="ml-6">
+  <h1 class="mt-4 text-3xl text-[#163269]">Approved Student Appointments</h1>
+
+  <ul class="ml-8 mt-2 list-decimal">
+    <% @students.each do |s| %>
+      <li>
+        <% if s.appointments.present? %>
+          <h3><%= s.user.name %></h3>
+          <ul class="list-disc">
+            <% s.appointments.where(approved: true).each do |app| %>
+              <li class="ml-4 mb-2">
+                <%= app.reason %>
+                <%= link_to "View", hcc_view_particular_appointment_path(app.id), class: "btn btn-outline btn-ghost btn-xs" %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<%= link_to "Back to Dashboard", root_path, class: "btn btn-active btn-ghost ml-4 mt-6" %>

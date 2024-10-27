@@ -1,0 +1,65 @@
+<h1 class="mt-4 ml-4 text-3xl text-[#163269]">Create a New Appointment</h1>
+
+<div class="mt-4 ml-4">
+<%= form_with(model: @appointment,url: student_create_appointment_path,method: :post) do |f| %>
+    <%= f.label :reason,class: "text-[#163269]" %><br>
+    <%= f.text_area :reason %><br>
+
+    <%= f.label :severity, class: "text-[#163269]" %><br>
+    <%= f.select :severity, Appointment.severities.keys.map { |s| [s.humanize, s] }, { prompt: 'Select Severity' }, class: "form-select" %><br>
+
+    <h4 class="text-[#163269]">Select Doctor</h4>
+    <%= f.collection_select :doctor_id, @doctors, :id, :name,prompt: "Choose a doctor" %>
+
+    <h4 class="text-[#163269]">Select Time Slot</h4>
+    <%= f.collection_select :time_slot_id, @time_slots.order(:begin), :id, :day, prompt: "Choose a time slot" %>
+
+    <div>
+    <%= f.submit "Create Appointment",class: "text-white btn btn-info btn-active mt-6 rounded-2xl"  %><br>
+    </div>
+<% end %>
+</div>
+
+
+
+<%= link_to "back to all appointments",student_view_appointments_path, class: "btn btn-active btn-ghost ml-4 mt-4" %>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+let doctorSelect = document.getElementById("appointment_doctor_id");
+let timeSlotSelect = document.getElementById("appointment_time_slot_id");
+
+console.log(doctorSelect);
+console.log(timeSlotSelect);
+
+doctorSelect.addEventListener("change",()=>{
+  let doctorId = doctorSelect.value;
+
+  if(doctorId){
+    fetch(`/students/get_time_slots_by_doctor/${doctorId}`)
+      .then(response=>response.json())
+      .then(data => {
+        console.log(data);
+        timeSlotSelect.innerHTML="";
+        const promptOption = document.createElement("option");
+        promptOption.value = "";
+        promptOption.textContent = "Choose a time slot";
+        timeSlotSelect.appendChild(promptOption); 
+
+        data.time_slots.forEach(time_slot => {
+            const option = document.createElement("option");
+            option.value = time_slot.id;
+            option.textContent = `${time_slot.name} ${time_slot.day}`;
+            timeSlotSelect.appendChild(option);
+        });
+      })
+      .catch(error=>console.error("Error fetching time slots: ",error));
+  }else{
+    timeSlotSelect.innerHTML = "<option value=''>Choose a time slot</option>";
+  }
+})
+
+});
+</script>

@@ -1,0 +1,2 @@
+module StudentAppointmentsHelper
+end
