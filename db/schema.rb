@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2024_10_27_081754) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "appointments", force: :cascade do |t|
     t.string "reason"
     t.datetime "created_at", null: false
@@ -39,8 +42,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_27_081754) do
   end
 
   create_table "doctors_time_slots", id: false, force: :cascade do |t|
-    t.integer "doctor_id", null: false
-    t.integer "time_slot_id", null: false
+    t.bigint "doctor_id", null: false
+    t.bigint "time_slot_id", null: false
   end
 
   create_table "hcc_in_charges", force: :cascade do |t|
@@ -80,7 +83,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_27_081754) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
-    t.integer "time_slot"
     t.integer "day"
   end
 
