@@ -1,8 +1,318 @@
-<h1 class="text-3xl text-[#163269] mt-6 ml-4"> DSW Profile </h1>
+<div class="profile-container">
+  <div class="page-header">
+    <h1 class="main-title">HCC In Charge Profile</h1>
+    <div class="nav-breadcrumbs">
+      <span>HCC</span> / <span>Profile</span>
+    </div>
+  </div>
 
-<p class = "text-[#163269] ml-4 mt-2">Name: <%= @user.name %></p>
-<p class = "text-[#163269] ml-4 mt-2">Email: <%= @user.email %></p>
-<p class = "text-[#163269] ml-4 mt-2">Role: <%= @user.role %></p>
-<p class = "text-[#163269] ml-4 mt-2">ID: <%= @hcc_in_charge.staff_id %></p>
+  <div class="profile-card">
+    <div class="card-header">
+      <h2>Personal Information</h2>
+    </div>
+    <div class="card-body">
+      <div class="profile-avatar">
+        <i class="fas fa-user-md"></i>
+      </div>
+      
+      <div class="profile-details">
+        <div class="info-row">
+          <div class="info-label">Name:</div>
+          <div class="info-value"><%= @user.name %></div>
+        </div>
+        
+        <div class="info-row">
+          <div class="info-label">Email:</div>
+          <div class="info-value"><%= @user.email %></div>
+        </div>
+        
+        <div class="info-row">
+          <div class="info-label">Role:</div>
+          <div class="info-value"><span class="role-badge">HCC In Charge</span></div>
+        </div>
+        
+        <div class="info-row">
+          <div class="info-label">Staff ID:</div>
+          <div class="info-value"><%= @hcc_in_charge.staff_id %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="action-buttons">
+    <%= link_to "Back to Dashboard", root_path, class: "back-button" %>
+    <%= link_to "Edit Profile", edit_user_registration_path, class: "edit-button" %>
+  </div>
+</div>
 
-<%= link_to "Back to Dashboard",root_path,class: "btn btn-active btn-ghost ml-4 mt-4" %>
+<style>
+  /* General Styles */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+
+  .profile-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    animation: fadeIn 0.5s;
+  }
+
+  /* Page Header */
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .main-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #163269;
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-breadcrumbs {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Profile Card */
+  .profile-card, .stats-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+
+  .card-header {
+    background-color: #f1f3f5;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  .card-header h2 {
+    margin: 0;
+    color: #163269;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .card-body {
+    padding: 2rem;
+  }
+
+  /* Profile Layout */
+  .profile-card .card-body {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+
+  /* Profile Avatar */
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+    background-color: #0dcaf0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 3rem;
+    flex-shrink: 0;
+  }
+
+  /* Profile Details */
+  .profile-details {
+    flex-grow: 1;
+  }
+
+  .info-row {
+    display: flex;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 1rem;
+  }
+
+  .info-row:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .info-label {
+    width: 120px;
+    font-weight: 600;
+    color: #495057;
+  }
+
+  .info-value {
+    flex-grow: 1;
+    color: #212529;
+  }
+
+  /* Role Badge */
+  .role-badge {
+    display: inline-block;
+    background-color: #0dcaf0;
+    color: white;
+    padding: 0.3rem 0.7rem;
+    border-radius: 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  /* Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .stat-item {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 3px solid #0dcaf0;
+  }
+
+  .stat-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  .stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #0dcaf0;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    color: #495057;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  /* Action Buttons */
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .back-button, .edit-button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .back-button {
+    background-color: #f8f9fa;
+    color: #495057;
+    border: 1px solid #ced4da;
+  }
+
+  .back-button:hover {
+    background-color: #e9ecef;
+    color: #212529;
+  }
+
+  .edit-button {
+    background-color: #0dcaf0;
+    color: white;
+    border: none;
+  }
+
+  .edit-button:hover {
+    background-color: #0bacce;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .profile-card .card-body {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .info-row {
+      flex-direction: column;
+    }
+
+    .info-label {
+      width: 100%;
+      margin-bottom: 0.25rem;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+    }
+
+    .back-button, .edit-button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add animation for cards
+    const cards = document.querySelectorAll('.profile-card, .stats-card');
+    
+    cards.forEach((card, index) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 100 * (index + 1));
+    });
+
+    // Add animation for stat items
+    const statItems = document.querySelectorAll('.stat-item');
+    
+    statItems.forEach((item, index) => {
+      item.style.opacity = '0';
+      
+      setTimeout(() => {
+        item.style.transition = 'opacity 0.6s ease, transform 0.3s ease, box-shadow 0.3s ease';
+        item.style.opacity = '1';
+      }, 500 + (index * 150));
+    });
+
+    // Add animation for action buttons
+    const buttons = document.querySelectorAll('.action-buttons a');
+    
+    buttons.forEach((button, index) => {
+      button.style.opacity = '0';
+      button.style.transform = 'translateY(10px)';
+      
+      setTimeout(() => {
+        button.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        button.style.opacity = '1';
+        button.style.transform = 'translateY(0)';
+      }, 800 + (index * 100));
+    });
+  });
+</script>

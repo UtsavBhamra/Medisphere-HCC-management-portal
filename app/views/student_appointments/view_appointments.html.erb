@@ -1,16 +1,286 @@
-<%= link_to "Create New Appointment +",student_new_appointment_path,class: "text-white btn btn-info btn-active mt-6 ml-4 rounded-2xl" %>
+<div class="appointments-container">
+  <div class="page-header">
+    <h1 class="main-title">My Appointments</h1>
+    <div class="nav-breadcrumbs">
+      <span>Student Portal</span> / <span>Appointments</span>
+    </div>
+  </div>
 
-<div class="ml-10">
-<h1 class="mt-4 text-3xl text-[#163269]">All Appointments - </h1><br>
+  <div class="action-bar">
+    <%= link_to student_new_appointment_path, class: "create-button" do %>
+      Create New Appointment +
+    <% end %>
+  </div>
 
-<% if @all_appointments %> 
-<ul class="list-decimal">
-<% @all_appointments.each do |app| %>
-<li><%= app.reason %> <%= link_to "View",student_view_particular_appointment_path(app.id), class: "btn btn-outline btn-ghost btn-xs" %></li><br> 
-<% end %>
-</ul>
-<br>
+  <% if @all_appointments && @all_appointments.any? %>
+    <div class="appointments-list-container">
+      <h2 class="section-heading">All Appointments</h2>
+      
+      <ul class="appointments-list">
+        <% @all_appointments.each do |app| %>
+          <li class="appointment-item">
+            <div class="appointment-content">
+              <span class="appointment-reason"><%= app.reason %></span>
+              <div class="appointment-status">
+                <% if app.approved %>
+                  <span class="status-badge approved">Approved</span>
+                <% else %>
+                  <span class="status-badge pending">Pending</span>
+                <% end %>
+              </div>
+            </div>
+            <div class="appointment-actions">
+              <span class="appointment-date"><%= app.created_at.strftime("%b %d, %Y") %></span>
+              <%= link_to "View", student_view_particular_appointment_path(app.id), class: "view-button" %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% else %>
+    <div class="empty-message">
+      You don't have any appointments yet. Click "Create New Appointment" to get started.
+    </div>
+  <% end %>
+
+  <div class="back-link">
+    <%= link_to "Back to Dashboard", root_path, class: "back-button" %>
+  </div>
 </div>
-<% end %>
 
-<%= link_to "Back to Dashboard",root_path,class: "btn btn-active btn-ghost ml-4" %>
+<style>
+  /* General Styles */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+
+  .appointments-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    animation: fadeIn 0.5s;
+  }
+
+  /* Page Header */
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .main-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #163269;
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-breadcrumbs {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Action Bar */
+  .action-bar {
+    margin-bottom: 2rem;
+  }
+
+  .create-button {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    background-color: #0dcaf0;
+    color: white;
+    border-radius: 1rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .create-button:hover {
+    background-color: #0aa1c0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Section Heading */
+  .section-heading {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #163269;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  /* Appointments List */
+  .appointments-list-container {
+    margin-bottom: 2rem;
+  }
+
+  .appointments-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .appointment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+  }
+
+  .appointment-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+  }
+
+  .appointment-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .appointment-reason {
+    font-size: 1.1rem;
+    color: #212529;
+    font-weight: 500;
+  }
+
+  .appointment-status {
+    display: flex;
+    align-items: center;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .status-badge.pending {
+    background-color: #ffc107;
+    color: #212529;
+  }
+
+  .status-badge.approved {
+    background-color: #198754;
+    color: white;
+  }
+
+  .appointment-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .appointment-date {
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+
+  /* View Button */
+  .view-button {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background-color: white;
+    color: #163269;
+    border: 1px solid #163269;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .view-button:hover {
+    background-color: #163269;
+    color: white;
+  }
+
+  /* Back Button */
+  .back-button {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background-color: #f8f9fa;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .back-button:hover {
+    background-color: #e9ecef;
+    color: #212529;
+  }
+
+  .back-link {
+    margin-top: 2rem;
+  }
+
+  /* Empty State */
+  .empty-message {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 2.5rem;
+    text-align: center;
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin: 2.5rem 0;
+    border: 1px dashed #dee2e6;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .appointment-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .appointment-actions {
+      margin-top: 1rem;
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add animation to appointment items
+    const appointmentItems = document.querySelectorAll('.appointment-item');
+    
+    appointmentItems.forEach((item, index) => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        item.style.opacity = '1';
+        item.style.transform = 'translateY(0)';
+      }, 100 * (index + 1));
+    });
+  });
+</script>

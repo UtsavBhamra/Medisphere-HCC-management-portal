@@ -1,65 +1,353 @@
-<h1 class="mt-4 ml-4 text-3xl text-[#163269]">Create a New Appointment</h1>
-
-<div class="mt-4 ml-4">
-<%= form_with(model: @appointment,url: student_create_appointment_path,method: :post) do |f| %>
-    <%= f.label :reason,class: "text-[#163269]" %><br>
-    <%= f.text_area :reason %><br>
-
-    <%= f.label :severity, class: "text-[#163269]" %><br>
-    <%= f.select :severity, Appointment.severities.keys.map { |s| [s.humanize, s] }, { prompt: 'Select Severity' }, class: "form-select" %><br>
-
-    <h4 class="text-[#163269]">Select Doctor</h4>
-    <%= f.collection_select :doctor_id, @doctors, :id, :name,prompt: "Choose a doctor" %>
-
-    <h4 class="text-[#163269]">Select Time Slot</h4>
-    <%= f.collection_select :time_slot_id, @time_slots.order(:begin), :id, :day, prompt: "Choose a time slot" %>
-
-    <div>
-    <%= f.submit "Create Appointment",class: "text-white btn btn-info btn-active mt-6 rounded-2xl"  %><br>
+<div class="form-container">
+  <div class="page-header">
+    <h1 class="main-title">Create a New Appointment</h1>
+    <div class="nav-breadcrumbs">
+      <span>Student</span> / <span>Appointments</span> / <span>New</span>
     </div>
-<% end %>
+  </div>
+
+  <%= form_with(model: @appointment, url: student_create_appointment_path, method: :post, class: "appointment-form") do |f| %>
+    <div class="form-card">
+      <div class="card-header">
+        <h2>Appointment Details</h2>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <%= f.label :reason, "Reason for Visit", class: "form-label" %>
+          <%= f.text_area :reason, class: "form-textarea", placeholder: "Please describe your symptoms or reason for the appointment..." %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :severity, "Severity Level", class: "form-label" %>
+          <%= f.select :severity, Appointment.severities.keys.map { |s| [s.humanize, s] }, { prompt: 'Select Severity' }, class: "form-select" %>
+          <div class="severity-indicators">
+            <span class="severity-low">Low</span>
+            <span class="severity-medium">Medium</span>
+            <span class="severity-high">High</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="card-header">
+        <h2>Doctor & Time Slot</h2>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <%= f.label :doctor_id, "Select Doctor", class: "form-label" %>
+          <%= f.collection_select :doctor_id, @doctors, :id, :name, { prompt: "Choose a doctor" }, class: "form-select" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :time_slot_id, "Select Time Slot", class: "form-label" %>
+          <%= f.collection_select :time_slot_id, @time_slots.order(:begin), :id, :day, { prompt: "Choose a time slot" }, class: "form-select" %>
+        </div>
+
+        
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "Create Appointment", class: "submit-button" %>
+      <%= link_to "Cancel", student_view_appointments_path, class: "cancel-button" %>
+    </div>
+  <% end %>
 </div>
 
+<style>
+  /* General Styles */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
 
+  .form-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    animation: fadeIn 0.5s;
+  }
 
-<%= link_to "back to all appointments",student_view_appointments_path, class: "btn btn-active btn-ghost ml-4 mt-4" %>
+  /* Page Header */
+  .page-header {
+    margin-bottom: 2rem;
+  }
 
+  .main-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #163269;
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-breadcrumbs {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Form Card */
+  .form-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .card-header {
+    background-color: #f1f3f5;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  .card-header h2 {
+    margin: 0;
+    color: #163269;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  /* Form Elements */
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #495057;
+  }
+
+  .form-select, .form-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .form-textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .form-select:focus, .form-textarea:focus {
+    border-color: #86b7fe;
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba(22, 50, 105, 0.15);
+  }
+
+  /* Severity Indicators */
+  .severity-indicators {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+
+  .severity-low, .severity-medium, .severity-high {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .severity-low {
+    background-color: #d1e7dd;
+    color: #0f5132;
+  }
+
+  .severity-medium {
+    background-color: #fff3cd;
+    color: #664d03;
+  }
+
+  .severity-high {
+    background-color: #f8d7da;
+    color: #842029;
+  }
+
+  /* Time Slot Preview */
+  .time-slot-preview {
+    background-color: #e3f2fd;
+    border-radius: 6px;
+    padding: 1rem;
+    border-left: 4px solid #0d6efd;
+    margin-top: 1rem;
+  }
+
+  .preview-label {
+    font-weight: 600;
+    color: #0d6efd;
+    margin-bottom: 0.25rem;
+  }
+
+  .preview-content {
+    color: #0d6efd;
+    font-size: 1.1rem;
+  }
+
+  /* Form Actions */
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .submit-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #0dcaf0;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .submit-button:hover {
+    background-color: #0bacce;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .cancel-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #f8f9fa;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .cancel-button:hover {
+    background-color: #e9ecef;
+    color: #212529;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .form-actions {
+      flex-direction: column;
+    }
+
+    .submit-button, .cancel-button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+  // Keep the original JavaScript for doctor-time slot functionality
+  let doctorSelect = document.getElementById("appointment_doctor_id");
+  let timeSlotSelect = document.getElementById("appointment_time_slot_id");
+  let timeSlotDetails = document.getElementById("time-slot-details");
 
-let doctorSelect = document.getElementById("appointment_doctor_id");
-let timeSlotSelect = document.getElementById("appointment_time_slot_id");
+  // Function to update the time slot preview
+  function updateTimeSlotPreview() {
+    if (timeSlotSelect.selectedIndex > 0) {
+      const selectedOption = timeSlotSelect.options[timeSlotSelect.selectedIndex];
+      timeSlotDetails.textContent = selectedOption.textContent;
+    } else {
+      timeSlotDetails.textContent = "Please select a time slot";
+    }
+  }
 
-console.log(doctorSelect);
-console.log(timeSlotSelect);
+  // Add event listener for time slot selection change
+  timeSlotSelect.addEventListener("change", updateTimeSlotPreview);
 
-doctorSelect.addEventListener("change",()=>{
-  let doctorId = doctorSelect.value;
+  // Handle doctor selection change (original functionality)
+  doctorSelect.addEventListener("change", () => {
+    let doctorId = doctorSelect.value;
 
-  if(doctorId){
-    fetch(`/students/get_time_slots_by_doctor/${doctorId}`)
-      .then(response=>response.json())
-      .then(data => {
-        console.log(data);
-        timeSlotSelect.innerHTML="";
-        const promptOption = document.createElement("option");
-        promptOption.value = "";
-        promptOption.textContent = "Choose a time slot";
-        timeSlotSelect.appendChild(promptOption); 
+    if (doctorId) {
+      fetch(`/students/get_time_slots_by_doctor/${doctorId}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          timeSlotSelect.innerHTML = "";
+          const promptOption = document.createElement("option");
+          promptOption.value = "";
+          promptOption.textContent = "Choose a time slot";
+          timeSlotSelect.appendChild(promptOption);
 
-        data.time_slots.forEach(time_slot => {
+          data.time_slots.forEach(time_slot => {
             const option = document.createElement("option");
             option.value = time_slot.id;
             option.textContent = `${time_slot.name} ${time_slot.day}`;
             timeSlotSelect.appendChild(option);
-        });
-      })
-      .catch(error=>console.error("Error fetching time slots: ",error));
-  }else{
-    timeSlotSelect.innerHTML = "<option value=''>Choose a time slot</option>";
-  }
-})
+          });
+          
+          // Update the preview after loading new time slots
+          timeSlotDetails.textContent = "Please select a time slot";
+        })
+        .catch(error => console.error("Error fetching time slots: ", error));
+    } else {
+      timeSlotSelect.innerHTML = "<option value=''>Choose a time slot</option>";
+      timeSlotDetails.textContent = "Please select a doctor and time slot";
+    }
+  });
 
+  // Add animation for form cards
+  const cards = document.querySelectorAll('.form-card');
+  
+  cards.forEach((card, index) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+      card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, 100 * (index + 1));
+  });
+
+  // Add interactive highlight to severity selection
+  const severitySelect = document.querySelector('select[name="appointment[severity]"]');
+  const severityIndicators = document.querySelectorAll('.severity-low, .severity-medium, .severity-high');
+  
+  severitySelect.addEventListener('change', function() {
+    const selectedValue = this.value;
+    
+    severityIndicators.forEach(indicator => {
+      indicator.classList.remove('active');
+    });
+    
+    if (selectedValue === 'low') {
+      document.querySelector('.severity-low').classList.add('active');
+    } else if (selectedValue === 'medium') {
+      document.querySelector('.severity-medium').classList.add('active');
+    } else if (selectedValue === 'high') {
+      document.querySelector('.severity-high').classList.add('active');
+    }
+  });
 });
 </script>

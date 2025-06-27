@@ -1,9 +1,154 @@
-<h1 class="my-4 ml-4 text-3xl text-[#163269]">All pending leave letters</h1>
+<div class="leave-letters-container">
+  <h1 class="section-heading">All pending leave letters</h1>
 
-<ul class="list-decimal ml-8">
-<% @leave_letters.each do |ll| %>
-    <li><%= ll.title %>  <%= link_to "View",dsw_view_particular_leave_letter_path(ll.id),class: "btn btn-outline btn-ghost btn-xs" %></li>
-<% end %>
-</ul>
+  <% if @leave_letters.any? %>
+    <ul class="leave-letters-list">
+      <% @leave_letters.each do |ll| %>
+        <li class="leave-letter-item">
+          <span class="leave-letter-title"><%= ll.title %></span>
+          <%= link_to "View", dsw_view_particular_leave_letter_path(ll.id), class: "view-button" %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="empty-message">No pending leave letters at this time.</div>
+  <% end %>
 
-<%= link_to "Back to Dashboard", root_path, class: "btn btn-active btn-ghost ml-4 mt-6" %>
+  <div class="back-link">
+    <%= link_to "Back to Dashboard", root_path, class: "back-button" %>
+  </div>
+</div>
+
+<style>
+  /* General Styles */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+
+  .leave-letters-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    animation: fadeIn 0.5s;
+  }
+
+  /* Headings */
+  .section-heading {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #163269;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  /* Leave Letters List */
+  .leave-letters-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 1rem 0 2rem 0;
+  }
+
+  .leave-letter-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .leave-letter-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .leave-letter-title {
+    font-size: 1.1rem;
+    color: #343a40;
+    flex-grow: 1;
+  }
+
+  /* Empty State */
+  .empty-message {
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 1.5rem;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 1.1rem;
+    margin: 2rem 0;
+  }
+
+  /* Buttons */
+  .view-button {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    background-color: white;
+    color: #163269;
+    border: 1px solid #163269;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .view-button:hover {
+    background-color: #163269;
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  .back-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #f8f9fa;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .back-button:hover {
+    background-color: #e9ecef;
+    color: #212529;
+  }
+
+  .back-link {
+    margin-top: 2rem;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add hover animation for leave letter items
+    const leaveLetterItems = document.querySelectorAll('.leave-letter-item');
+    
+    leaveLetterItems.forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        this.style.backgroundColor = '#f8f9fa';
+      });
+      
+      item.addEventListener('mouseleave', function() {
+        this.style.backgroundColor = 'white';
+      });
+    });
+  });
+</script>

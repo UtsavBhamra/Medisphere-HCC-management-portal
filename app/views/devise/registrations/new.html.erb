@@ -1,129 +1,469 @@
-<h2 class="ml-[800px] w-[100px] text-[#2563eb]">Sign up</h2>
+<div class="registration-container">
+  <div class="registration-card">
+    <div class="card-header">
+      <h2 class="main-title">Create Account</h2>
+      <p class="subtitle">Join the Healthcare Center Portal</p>
+    </div>
+    
+    <div class="card-body">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "registration-form" }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
 
-<div class="w-[300px] ml-[700px]">
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+        <div class="form-section">
+          <h3 class="section-title">Account Information</h3>
+          
+          <div class="form-group">
+            <%= f.label :email, "Email Address", class: "form-label" %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-input", placeholder: "Enter your email" %>
+          </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+          <div class="form-group">
+            <%= f.label :name, "Full Name", class: "form-label" %>
+            <%= f.text_field :name, class: "form-input", placeholder: "Enter your full name" %>
+          </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+          <div class="form-row">
+            <div class="form-group">
+              <%= f.label :password, class: "form-label" %>
+              <% if @minimum_password_length %>
+              <span class="password-hint">(<%= @minimum_password_length %> characters minimum)</span>
+              <% end %>
+              <%= f.password_field :password, autocomplete: "new-password", class: "form-input", placeholder: "Create a password" %>
+            </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+            <div class="form-group">
+              <%= f.label :password_confirmation, "Confirm Password", class: "form-label" %>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-input", placeholder: "Repeat your password" %>
+            </div>
+          </div>
+        </div>
 
-  <div class="field">
-    <%= f.label :name %><br/>
-    <%= f.text_field :name %>
-  </div>
+        <div class="form-section">
+          <h3 class="section-title">Role Selection</h3>
+          
+          <div class="role-selection">
+            <div class="role-option" data-role="student">
+              <%= f.radio_button :role, "student", class: "role-radio", onclick: "toggleRoleFields()" %>
+              <label for="user_role_student" class="role-label">
+                <div class="role-icon"><i class="fas fa-user-graduate"></i></div>
+                <div class="role-name">Student</div>
+              </label>
+            </div>
+            
+            <div class="role-option" data-role="hcc_in_charge">
+              <%= f.radio_button :role, "hcc_in_charge", class: "role-radio", onclick: "toggleRoleFields()" %>
+              <label for="user_role_hcc_in_charge" class="role-label">
+                <div class="role-icon"><i class="fas fa-user-md"></i></div>
+                <div class="role-name">HCC In Charge</div>
+              </label>
+            </div>
+            
+            <div class="role-option" data-role="dsw">
+              <%= f.radio_button :role, "dsw", class: "role-radio", onclick: "toggleRoleFields()" %>
+              <label for="user_role_dsw" class="role-label">
+                <div class="role-icon"><i class="fas fa-user-tie"></i></div>
+                <div class="role-name">Dean Student Welfare</div>
+              </label>
+            </div>
+          </div>
+        </div>
 
-  <div class="field">
-      <%= f.label :role, "Select Your Role:" %><br />
-      <div>
-        <label>
-          <%= f.radio_button :role, "student", onclick: "toggleRoleFields()" %>
-          Student<br>
-        </label>
-        <label>
-          <%= f.radio_button :role, "hcc_in_charge", onclick: "toggleRoleFields()" %>
-          HCC In Charge<br>
-        </label>
-        <label>
-          <%= f.radio_button :role, "dsw", onclick: "toggleRoleFields()" %>
-          Dean Student Welfare<br>
-        </label>
+        <div id="student-fields" class="form-section role-fields hidden">
+          <h3 class="section-title">Student Information</h3>
+          
+          <%= f.fields_for @student do |student_fields| %>
+            <div class="form-group">
+              <%= student_fields.label :student_id, "Student ID", class: "form-label" %>
+              <%= student_fields.text_field :student_id, class: "form-input", placeholder: "Enter your student ID" %>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <%= student_fields.label :department, class: "form-label" %>
+                <%= student_fields.select :department, Student.departments.keys.map { |dept| [dept.titleize, dept] }, { include_blank: "Select department" }, class: "form-select" %>
+              </div>
+
+              <div class="form-group">
+                <%= student_fields.label :program_type, "Program", class: "form-label" %>
+                <%= student_fields.select :program_type, Student.program_types.keys.map { |type| [type.titleize, type] }, { include_blank: "Select program" }, class: "form-select" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <div id="hcc_in_charge-fields" class="form-section role-fields hidden">
+          <h3 class="section-title">HCC In Charge Information</h3>
+          
+          <%= f.fields_for @hcc_in_charge do |hcc_fields| %>
+            <div class="form-group">
+              <%= hcc_fields.label :staff_id, "Staff ID", class: "form-label" %>
+              <%= hcc_fields.text_field :staff_id, class: "form-input", placeholder: "Enter your staff ID" %>
+            </div>
+          <% end %>
+        </div>
+
+        <div id="dsw-fields" class="form-section role-fields hidden">
+          <h3 class="section-title">Dean Student Welfare Information</h3>
+          
+          <%= f.fields_for @dsw do |dsw_fields| %>
+            <div class="form-group">
+              <%= dsw_fields.label :staff_id, "Staff ID", class: "form-label" %>
+              <%= dsw_fields.text_field :staff_id, class: "form-input", placeholder: "Enter your staff ID" %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit "Create Account", class: "submit-button" %>
+        </div>
+      <% end %>
+
+      <div class="additional-links">
+        Already have an account? <%= link_to "Sign in here", new_user_session_path, class: "text-link" %>
       </div>
     </div>
-
-  <div id="student-fields" class="hidden">
-    <h3 class="mt-4 text-[#2563eb]">Student Information</h3>
-    <div class="field">
-      <%= f.fields_for @student do |student_fields| %>
-        <%= student_fields.label :student_id %> ID
-        <%= student_fields.text_field :student_id %><br><br>
-
-        <%= student_fields.label :department %>
-        <%= student_fields.select :department, Student.departments.keys.map { |dept| [dept.titleize, dept] } %><br><br>
-
-        <%= student_fields.label :program_type %>
-        <%= student_fields.select :program_type, Student.program_types.keys.map { |type| [type.titleize, type] } %><br>
-      <% end %>
-    </div>
   </div>
-
-  <div id="hcc_in_charge-fields" class="hidden">
-    <h3 class="mt-4 text-[#2563eb]">HCC In Charge Information</h3>
-    <div class="field">
-      <%= f.fields_for @hcc_in_charge do |hcc_fields| %>
-        <%= hcc_fields.label :staff_id %> ID<br />
-        <%= hcc_fields.text_field :staff_id %>
-      <% end %>
-    </div>
-  </div>
-
-  <div id="dsw-fields" class="hidden">
-    <h3 class="mt-4 text-[#2563eb]">Dean Student Welfare Information</h3>
-    <div class="field">
-      <%= f.fields_for @dsw do |dsw_fields| %>
-        <%= dsw_fields.label :staff_id %> ID<br />
-        <%= dsw_fields.text_field :staff_id %>
-      <% end %>
-    </div>
-  </div>
-
-  <br>
-
-  <div class="actions">
-    <%= f.submit "Sign up", class: "bg-[#2563eb] text-white px-6 py-2 rounded-md mb-[10px]" %>
-  </div>
-<% end %>
-
-<div class="text-[#2563eb] underline">
-<%= render "devise/shared/links", class: "btn btn-active btn-ghost ml-4 mt-6" %>
-</div>
 </div>
 
+<style>
+  /* General Styles */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f1f3f5;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
 
+  .registration-container {
+    max-width: 800px;
+    width: 100%;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    animation: fadeIn 0.5s;
+  }
 
+  /* Registration Card */
+  .registration-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
 
-<script>
+  .card-header {
+    background-color: #163269;
+    padding: 2rem;
+    text-align: center;
+    color: white;
+  }
 
-const toggleRoleFields = () => {
+  .main-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+  }
 
-  const selectedRole = document.querySelector("input[name='user[role]']:checked");
-  console.log(selectedRole)
+  .subtitle {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin: 0;
+  }
 
-  document.getElementById("student-fields").classList.add("hidden");
-  document.getElementById("hcc_in_charge-fields").classList.add("hidden");
-  document.getElementById("dsw-fields").classList.add("hidden");
+  .card-body {
+    padding: 2rem;
+  }
 
-  if (selectedRole) {
-    const role = selectedRole.value;
-    console.log(role);
-    if (role === "student") {
-      console.log(1);
-      document.getElementById("student-fields").classList.remove("hidden");
-    } else if (role === "hcc_in_charge") {
-      console.log(2);
-      document.getElementById("hcc_in_charge-fields").classList.remove("hidden");
-    } else if (role === "dsw") {
-      console.log(3);
-      document.getElementById("dsw-fields").classList.remove("hidden");
+  /* Form Elements */
+  .registration-form {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  .form-section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #163269;
+    margin-bottom: 1.25rem;
+    margin-top: 0;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+    flex: 1;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #495057;
+  }
+
+  .form-input, .form-select {
+    width: 100%;
+    padding: 0.85rem;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .form-input:focus, .form-select:focus {
+    border-color: #86b7fe;
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba(22, 50, 105, 0.15);
+  }
+
+  .password-hint {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-left: 0.5rem;
+    font-style: italic;
+  }
+
+  /* Role Selection */
+  .role-selection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .role-option {
+    position: relative;
+    border: 2px solid #ced4da;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .role-option:hover {
+    border-color: #163269;
+  }
+
+  .role-radio {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+    margin: 0;
+    z-index: 1;
+  }
+
+  .role-radio:checked + .role-label {
+    color: #163269;
+  }
+
+  .role-radio:checked + .role-label .role-icon {
+    background-color: #163269;
+    color: white;
+  }
+
+  .role-option[data-role="student"] .role-radio:checked ~ .role-label .role-icon {
+    background-color: #0dcaf0;
+  }
+
+  .role-option[data-role="hcc_in_charge"] .role-radio:checked ~ .role-label .role-icon {
+    background-color: #20c997;
+  }
+
+  .role-option[data-role="dsw"] .role-radio:checked ~ .role-label .role-icon {
+    background-color: #6f42c1;
+  }
+
+  .role-option:has(.role-radio:checked) {
+    border-color: #163269;
+    background-color: #f1f8ff;
+  }
+
+  .role-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .role-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #6c757d;
+    transition: all 0.3s ease;
+  }
+
+  .role-name {
+    font-weight: 600;
+    color: #495057;
+  }
+
+  /* Submit Button */
+  .form-actions {
+    margin-top: 2rem;
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: 0.85rem;
+    background-color: #163269;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .submit-button:hover {
+    background-color: #0e254d;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  /* Additional Links */
+  .additional-links {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    color: #6c757d;
+  }
+
+  .text-link {
+    color: #163269;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+  }
+
+  .text-link:hover {
+    color: #0e254d;
+    text-decoration: underline;
+  }
+
+  /* Hidden Class */
+  .hidden {
+    display: none;
+  }
+
+  /* Error Messages */
+  #error_explanation {
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #f5c2c7;
+  }
+
+  #error_explanation h2 {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  #error_explanation ul {
+    margin-bottom: 0;
+    padding-left: 1.5rem;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .role-selection {
+      grid-template-columns: 1fr;
+    }
+
+    .card-body {
+      padding: 1.5rem;
     }
   }
-};
+</style>
 
-document.addEventListener("DOMContentLoaded", toggleRoleFields);
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Initialize role fields visibility
+    toggleRoleFields();
+    
+    // Make entire role option clickable
+    document.querySelectorAll('.role-option').forEach(option => {
+      option.addEventListener('click', function() {
+        const radio = this.querySelector('.role-radio');
+        radio.checked = true;
+        toggleRoleFields();
+      });
+    });
+    
+    // Add animation to form sections
+    const sections = document.querySelectorAll('.form-section');
+    sections.forEach((section, index) => {
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        section.style.opacity = '1';
+        section.style.transform = 'translateY(0)';
+      }, 100 * (index + 1));
+    });
+  });
 
+  function toggleRoleFields() {
+    const selectedRole = document.querySelector("input[name='user[role]']:checked");
+    
+    // Hide all role fields
+    document.querySelectorAll('.role-fields').forEach(el => {
+      el.classList.add('hidden');
+    });
+    
+    // Show the selected role field
+    if (selectedRole) {
+      const role = selectedRole.value;
+      const fieldElement = document.getElementById(role + "-fields");
+      if (fieldElement) {
+        fieldElement.classList.remove('hidden');
+      }
+    }
+  }
 </script>
-

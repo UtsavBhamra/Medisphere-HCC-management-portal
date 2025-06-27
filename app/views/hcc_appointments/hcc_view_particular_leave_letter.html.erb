@@ -1,28 +1,417 @@
-<h3 class="text-3xl text-[#163269] mt-6 ml-4"> Requested by: <%= @leave_letter.appointment.student.user.name %> </h3>
+<div class="leave-letter-detail-container">
+  <div class="page-header">
+    <h1 class="main-title">Leave Letter Details</h1>
+    <div class="nav-breadcrumbs">
+      <span>Health Care Center</span> / <span>Leave Letters</span> / <span>View Details</span>
+    </div>
+  </div>
 
-<p class = "text-[#163269] ml-4 mt-2"> Title: <%= @leave_letter.title %></p>
+  <div class="leave-letter-card">
+    <div class="card-header">
+      <h2>Student Information</h2>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <div class="info-label">Student Name:</div>
+        <div class="info-value"><%= @leave_letter.appointment.student.user.name %></div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Title:</div>
+        <div class="info-value"><%= @leave_letter.title %></div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Current Status:</div>
+        <div class="info-value">
+          <span class="status-badge"><%= @leave_letter.status %></span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<p class="text-[#163269] ml-4 mt-4"> Applicant response:</p>
-<p class="bg-gray-100 mx-4 p-4 rounded-xl"><%= @leave_letter.applicant_response %></p>
+  <div class="leave-letter-card">
+    <div class="card-header">
+      <h2>Leave Period</h2>
+    </div>
+    <div class="card-body">
+      <div class="date-container">
+        <div class="date-block">
+          <div class="date-label">Start Date</div>
+          <div class="date-value"><%= @leave_letter.start_date %></div>
+        </div>
+        <div class="date-arrow">→</div>
+        <div class="date-block">
+          <div class="date-label">End Date</div>
+          <div class="date-value"><%= @leave_letter.end_date %></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<p class = "text-[#163269] ml-4 mt-2"> Start Date: <%= @leave_letter.start_date %></p>
-<p class = "text-[#163269] ml-4 mt-2"> End Date: <%= @leave_letter.end_date %></p>
-<p class = "text-[#163269] ml-4 mt-2"> Status: <%= @leave_letter.status %></p><br></p>
+  <div class="leave-letter-card">
+    <div class="card-header">
+      <h2>Applicant Statement</h2>
+    </div>
+    <div class="card-body">
+      <div class="statement-content">
+        <%= @leave_letter.applicant_response %>
+      </div>
+    </div>
+  </div>
 
-<% if @leave_letter.status=="created" %>
-<h3 class= "text-[#163269] mt-2 ml-4">HCC Comments -</h3>
-<%= form_with model: @leave_letter, url: hcc_add_leave_letter_comments_path(@leave_letter),method: :patch do |f| %>
-  <%= f.text_area :hcc_comments, class: "text ml-4 textarea textarea-warning" %>  <br>
-  <%= f.submit "Add Comment", class: "btn btn-outline btn-ghost btn-xs ml-4" %>
-<% end %>
-<% end %>
+  <% if @leave_letter.status == "created" %>
+    <div class="leave-letter-card">
+      <div class="card-header">
+        <h2>HCC Comments</h2>
+      </div>
+      <div class="card-body">
+        <%= form_with model: @leave_letter, url: hcc_add_leave_letter_comments_path(@leave_letter), method: :patch, class: "comments-form" do |f| %>
+          <%= f.text_area :hcc_comments, class: "comments-textarea", placeholder: "Add your comments here..." %>
+          <%= f.submit "Add Comment", class: "submit-button" %>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div class="leave-letter-card">
+      <div class="card-header">
+        <h2>HCC Comments</h2>
+      </div>
+      <div class="card-body">
+        <div class="remarks-container">
+          <% if @leave_letter.hcc_comments.present? %>
+            <%= @leave_letter.hcc_comments %>
+          <% else %>
+            <span class="no-remarks">No comments provided</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
-<br>
+  <div class="action-buttons">
+    <% if @leave_letter.status == "created" %>
+      <%= form_with url: hcc_forward_leave_letter_path(@leave_letter), method: :post do %>
+        <%= submit_tag "Forward Leave Letter", class: "forward-button" %>
+      <% end %>
+    <% end %>
+    
+    <%= link_to "Back to All Leave Letters", hcc_view_leave_letters_path, class: "back-button" %>
+  </div>
+</div>
 
-<% if @leave_letter.status=="created" %>
-<%= form_with url: hcc_forward_leave_letter_path(@leave_letter), method: :post do %>
-    <%= submit_tag "Forward Leave Letter",class: "text-white btn btn-info btn-active ml-4 mr-2 rounded-2xl" %>
-<% end %>
-<% end %>
+<style>
+  /* General Styles */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
 
-<%= link_to "Back to All Leave Letters",hcc_view_leave_letters_path,class: "btn btn-active btn-ghost ml-4 mt-6" %>
+  .leave-letter-detail-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    animation: fadeIn 0.5s;
+  }
+
+  /* Page Header */
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .main-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #163269;
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-breadcrumbs {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Card Styles */
+  .leave-letter-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .card-header {
+    background-color: #f1f3f5;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  .card-header h2 {
+    margin: 0;
+    color: #163269;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  /* Info Row */
+  .info-row {
+    display: flex;
+    margin-bottom: 1rem;
+  }
+
+  .info-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .info-label {
+    width: 120px;
+    font-weight: 600;
+    color: #495057;
+  }
+
+  .info-value {
+    flex-grow: 1;
+    color: #212529;
+  }
+
+  /* Status Badge */
+  .status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    background-color: #6c757d;
+    color: white;
+  }
+
+  /* Date Container */
+  .date-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .date-block {
+    text-align: center;
+    padding: 1rem;
+    background-color: #f1f3f5;
+    border-radius: 8px;
+    min-width: 150px;
+  }
+
+  .date-label {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-bottom: 0.25rem;
+  }
+
+  .date-value {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #212529;
+  }
+
+  .date-arrow {
+    font-size: 1.5rem;
+    color: #6c757d;
+  }
+
+  /* Statement Content */
+  .statement-content {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 6px;
+    border-left: 4px solid #ced4da;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #212529;
+  }
+
+  /* Comments Form */
+  .comments-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .comments-textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    margin-bottom: 1rem;
+  }
+
+  .comments-textarea:focus {
+    border-color: #86b7fe;
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba(22, 50, 105, 0.1);
+  }
+
+  .submit-button {
+    align-self: flex-start;
+    padding: 0.6rem 1.2rem;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .submit-button:hover {
+    background-color: #5a6268;
+  }
+
+  /* Remarks */
+  .remarks-container {
+    background-color: #f8f9fa;
+    padding: 1.25rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #212529;
+    line-height: 1.6;
+  }
+
+  .no-remarks {
+    color: #6c757d;
+    font-style: italic;
+  }
+
+  /* Action Buttons */
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .forward-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #0dcaf0;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .forward-button:hover {
+    background-color: #0bacce;
+  }
+
+  .back-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #f8f9fa;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .back-button:hover {
+    background-color: #e9ecef;
+    color: #212529;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .info-row {
+      flex-direction: column;
+      margin-bottom: 1.25rem;
+    }
+
+    .info-label {
+      margin-bottom: 0.25rem;
+    }
+
+    .date-container {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .date-arrow {
+      transform: rotate(90deg);
+    }
+
+    .action-buttons {
+      flex-direction: column;
+    }
+
+    .forward-button, .back-button {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Set appropriate color for status badge
+    const statusBadge = document.querySelector('.status-badge');
+    const status = statusBadge.textContent.trim().toLowerCase();
+    
+    if (status === 'created') {
+      statusBadge.style.backgroundColor = '#ffc107';
+      statusBadge.style.color = '#212529';
+    } else if (status === 'forwarded') {
+      statusBadge.style.backgroundColor = '#0dcaf0';
+      statusBadge.style.color = '#212529';
+    } else if (status === 'approved') {
+      statusBadge.style.backgroundColor = '#198754';
+      statusBadge.style.color = 'white';
+    } else if (status === 'rejected') {
+      statusBadge.style.backgroundColor = '#dc3545';
+      statusBadge.style.color = 'white';
+    }
+
+    // Add animation for cards
+    const cards = document.querySelectorAll('.leave-letter-card');
+    
+    cards.forEach((card, index) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 100 * (index + 1));
+    });
+
+    // Auto-resize text area
+    const textarea = document.querySelector('.comments-textarea');
+    if (textarea) {
+      textarea.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+      });
+    }
+  });
+</script>

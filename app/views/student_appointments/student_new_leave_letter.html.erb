@@ -1,23 +1,355 @@
-<h1 class="mt-4 ml-4 text-3xl text-[#163269]">Create New Leave Letter </h1>
+<div class="form-container">
+  <div class="page-header">
+    <h1 class="main-title">Create New Leave Letter</h1>
+    <div class="nav-breadcrumbs">
+      <span>Student</span> / <span>Leave Letters</span> / <span>New</span>
+    </div>
+  </div>
 
-<div class="mt-4 ml-4">
-<%= form_with(model: @leave_letter,url: student_create_leave_letter_path(@appointment_id),method: :post) do |f| %>
+  <%= form_with(model: @leave_letter, url: student_create_leave_letter_path(@appointment_id), method: :post, class: "leave-letter-form") do |f| %>
+    <div class="form-card">
+      <div class="card-header">
+        <h2>Leave Request Details</h2>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <%= f.label :title, "Leave Title", class: "form-label" %>
+          <%= f.text_field :title, class: "form-input", placeholder: "E.g., Medical Leave for Fever" %>
+        </div>
 
-    <%= f.label :title,class: "text-[#163269]" %><br>
-    <%= f.text_field :title %><br><br>
+        <div class="form-group">
+          <%= f.label :applicant_response, "Detailed Explanation", class: "form-label" %>
+          <%= f.text_area :applicant_response, class: "form-textarea", placeholder: "Please explain why you need this leave and include any relevant medical information..." %>
+        </div>
 
-    <%= f.label :applicant_response,class: "text-[#163269]" %><br>
-    <%= f.text_area :applicant_response %><br><br>
+        <div class="form-row">
+          <div class="form-group">
+            <%= f.label :start_date, "Start Date", class: "form-label" %>
+            <%= f.date_field :start_date, class: "form-input date-input" %>
+          </div>
 
-    <%= f.label :start_date,class: "text-[#163269]" %>
-    <%= f.date_field :start_date %><br><br>
+          <div class="form-group">
+            <%= f.label :end_date, "End Date", class: "form-label" %>
+            <%= f.date_field :end_date, class: "form-input date-input" %>
+          </div>
+        </div>
+        
+        <div class="leave-duration">
+          <div class="duration-icon">
+            <i class="fas fa-calendar-day"></i>
+          </div>
+          <div class="duration-preview" id="leave-duration-preview">
+            Select dates to see leave duration
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <%= f.label :end_date,class: "text-[#163269]" %>
-    <%= f.date_field :end_date %><br><br>
 
-    <%= f.submit "Submit Leave Letter",class: "text-white btn btn-info btn-active mt-6 rounded-2xl" %><br><br>
-
-<% end %>
+    <div class="form-actions">
+      <%= f.submit "Submit Leave Letter", class: "submit-button" %>
+      <%= link_to "Cancel", student_view_leave_letters_path, class: "cancel-button" %>
+    </div>
+  <% end %>
 </div>
 
-<%= link_to "Back to leave letters",student_view_leave_letters_path, class: "btn btn-active btn-ghost ml-4 mt-4"%>
+<style>
+  /* General Styles */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+
+  .form-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    animation: fadeIn 0.5s;
+  }
+
+  /* Page Header */
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .main-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #163269;
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-breadcrumbs {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Form Card */
+  .form-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .card-header {
+    background-color: #f1f3f5;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  .card-header h2 {
+    margin: 0;
+    color: #163269;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  /* Form Elements */
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #495057;
+  }
+
+  .form-input, .form-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .form-textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .form-input:focus, .form-textarea:focus {
+    border-color: #86b7fe;
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba(22, 50, 105, 0.15);
+  }
+
+  .date-input {
+    font-family: inherit;
+  }
+
+  /* Leave Duration Preview */
+  .leave-duration {
+    display: flex;
+    align-items: center;
+    background-color: #e9ecef;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+  }
+
+  .duration-icon {
+    background-color: #6f42c1;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    color: white;
+    font-size: 1.25rem;
+  }
+
+  .duration-preview {
+    font-size: 1rem;
+    color: #495057;
+  }
+
+  /* Appointment Info */
+  .appointment-info {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 1.25rem;
+  }
+
+  .info-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    background-color: #d1e7dd;
+    color: #0f5132;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .info-badge.warning {
+    background-color: #fff3cd;
+    color: #664d03;
+  }
+
+  .appointment-details {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 1rem;
+  }
+
+  .appointment-details p {
+    margin: 0.5rem 0;
+  }
+
+  .hint-text {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+
+  /* Form Actions */
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .submit-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .submit-button:hover {
+    background-color: #5a32a3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .cancel-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #f8f9fa;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .cancel-button:hover {
+    background-color: #e9ecef;
+    color: #212529;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .form-row .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-actions {
+      flex-direction: column;
+    }
+
+    .submit-button, .cancel-button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const startDateInput = document.querySelector('input[name="leave_letter[start_date]"]');
+  const endDateInput = document.querySelector('input[name="leave_letter[end_date]"]');
+  const durationPreview = document.getElementById('leave-duration-preview');
+
+  // Function to calculate and display leave duration
+  function updateLeaveDuration() {
+    const startDate = new Date(startDateInput.value);
+    const endDate = new Date(endDateInput.value);
+    
+    if (startDateInput.value && endDateInput.value) {
+      if (endDate < startDate) {
+        durationPreview.textContent = "End date cannot be before start date";
+        durationPreview.style.color = "#dc3545";
+      } else {
+        // Calculate days difference
+        const diffTime = Math.abs(endDate - startDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end dates
+        
+        durationPreview.textContent = `${diffDays} day${diffDays !== 1 ? 's' : ''} of leave requested`;
+        durationPreview.style.color = "#495057";
+      }
+    } else {
+      durationPreview.textContent = "Select dates to see leave duration";
+      durationPreview.style.color = "#495057";
+    }
+  }
+
+  startDateInput.addEventListener("change", updateLeaveDuration);
+  endDateInput.addEventListener("change", updateLeaveDuration);
+  
+  // Add animation for form cards
+  const cards = document.querySelectorAll('.form-card');
+  
+  cards.forEach((card, index) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+      card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, 100 * (index + 1));
+  });
+});
+</script>

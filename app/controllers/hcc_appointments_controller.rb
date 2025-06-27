@@ -9,6 +9,7 @@ before_action :authorize_hcc_in_charge
 
     def hcc_view_appointments
         @students = Student.all
+        @appointments = Appointment.all
     end
 
     def hcc_view_leave_letters

@@ -1,5 +1,5 @@
 class Appointment < ApplicationRecord
-    enum :severity, [:mild ,:emergency, :dead]
+    enum :severity, [:mild ,:urgent, :emergency]
 
     belongs_to :student 
     belongs_to :time_slot

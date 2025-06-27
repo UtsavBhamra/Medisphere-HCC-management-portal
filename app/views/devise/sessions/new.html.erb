@@ -1,30 +1,233 @@
-<h2 class="ml-[800px] w-[100px] mt-10 text-[#2563eb]">Log in</h2>
-
-<div class="w-[300px] ml-[700px]">
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field my-[10px]">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<div class="login-container">
+  <div class="login-card">
+    <div class="card-header">
+      <h2 class="main-title">Sign In</h2>
+      <p class="subtitle">Access the Healthcare Center Portal</p>
     </div>
-  <% end %>
+    
+    <div class="card-body">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "login-form" }) do |f| %>
+        <div class="form-group">
+          <%= f.label :email, "Email Address", class: "form-label" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-input", placeholder: "Enter your email" %>
+        </div>
 
-  <div class="actions">
-    <%= f.submit "Log in",class: "bg-[#2563eb] text-white px-6 rounded-md mb-[10px]" %>
+        <div class="form-group">
+          <%= f.label :password, "Password", class: "form-label" %>
+          <%= f.password_field :password, autocomplete: "current-password", class: "form-input", placeholder: "Enter your password" %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="remember-me">
+            <%= f.check_box :remember_me, class: "remember-checkbox" %>
+            <%= f.label :remember_me, class: "remember-label" %>
+          </div>
+        <% end %>
+
+        <div class="form-actions">
+          <%= f.submit "Log In", class: "submit-button" %>
+        </div>
+      <% end %>
+
+      <div class="additional-links">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
   </div>
-<% end %>
+</div>
 
-<div class="text-[#2563eb] underline">
-<%= render "devise/shared/links" %>
-</div>
-</div>
+<style>
+  /* General Styles */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f1f3f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .login-container {
+    width: 100%;
+    max-width: 480px;
+    padding: 1.5rem;
+    animation: fadeIn 0.5s;
+  }
+
+  /* Login Card */
+  .login-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  .card-header {
+    background-color: #163269;
+    padding: 2rem;
+    text-align: center;
+    color: white;
+  }
+
+  .main-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  .card-body {
+    padding: 2rem;
+  }
+
+  /* Form Elements */
+  .login-form {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #495057;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0.85rem;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .form-input:focus {
+    border-color: #86b7fe;
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba(22, 50, 105, 0.15);
+  }
+
+  /* Remember Me */
+  .remember-me {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .remember-checkbox {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+  }
+
+  .remember-label {
+    font-size: 0.9rem;
+    color: #495057;
+    cursor: pointer;
+  }
+
+  /* Submit Button */
+  .form-actions {
+    margin-bottom: 1.5rem;
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: 0.85rem;
+    background-color: #163269;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .submit-button:hover {
+    background-color: #0e254d;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  /* Additional Links */
+  .additional-links {
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  .additional-links a {
+    color: #163269;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .additional-links a:hover {
+    color: #0e254d;
+    text-decoration: underline;
+  }
+
+  /* Footer */
+  .login-footer {
+    margin-top: 2rem;
+    text-align: center;
+    color: #6c757d;
+    font-size: 0.8rem;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 576px) {
+    .login-container {
+      padding: 0.75rem;
+    }
+
+    .card-header, .card-body {
+      padding: 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add subtle animation for inputs
+    const inputs = document.querySelectorAll('.form-input');
+    
+    inputs.forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.style.transition = 'transform 0.3s';
+        this.parentElement.style.transform = 'translateY(-2px)';
+      });
+      
+      input.addEventListener('blur', function() {
+        this.parentElement.style.transform = 'translateY(0)';
+      });
+    });
+
+    // Focus first input automatically
+    setTimeout(() => {
+      const firstInput = document.querySelector('.form-input');
+      if (firstInput) firstInput.focus();
+    }, 500);
+  });
+</script>

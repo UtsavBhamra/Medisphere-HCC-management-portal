@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Hcc Module" %></title>
+    <title><%= content_for(:title) || "NITK Health Care Center" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
@@ -13,47 +13,274 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    
+    <style>
+      /* Global Styles */
+      :root {
+        --primary-color: #163269;
+        --secondary-color: #0dcaf0;
+        --light-color: #f8f9fa;
+        --dark-color: #343a40;
+        --gray-color: #6c757d;
+        --success-color: #28a745;
+        --danger-color: #dc3545;
+        --warning-color: #ffc107;
+        --info-color: #17a2b8;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        overflow-x: hidden;
+        width: 100%;
+      }
+
+      /* Notification Styles */
+      .notification-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        max-width: 400px;
+        width: calc(100% - 40px);
+      }
+
+      .notification {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        animation: slideIn 0.3s, fadeOut 0.3s 5s forwards;
+      }
+
+      .notification-info {
+        background-color: var(--info-color);
+        color: white;
+      }
+
+      .notification-error {
+        background-color: var(--danger-color);
+        color: white;
+      }
+
+      .notification-icon {
+        margin-right: 15px;
+        font-size: 1.2rem;
+      }
+
+      .notification-message {
+        flex-grow: 1;
+      }
+
+      .notification-close {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.1rem;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+      }
+
+      .notification-close:hover {
+        opacity: 1;
+      }
+
+      /* Navbar Styles */
+      .navbar {
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+      }
+
+      .navbar-logo {
+        height: 40px;
+        margin-right: 10px;
+      }
+
+      .navbar-title {
+        color: var(--primary-color);
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+
+      .navbar-profile {
+        display: flex;
+        align-items: center;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .navbar-profile:hover {
+        color: var(--secondary-color);
+      }
+
+      .navbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .navbar-link {
+        color: var(--dark-color);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 0.75rem;
+        border-radius: 4px;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .navbar-link:hover {
+        background-color: #f1f3f5;
+        color: var(--primary-color);
+      }
+
+      .signout-button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 0.5rem 0.75rem;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .signout-button:hover {
+        background-color: #0e254d;
+      }
+
+      /* Animations */
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+
+      @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+      }
+
+      /* Content Container */
+      .content-wrapper {
+        min-height: calc(100vh - 72px);
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .navbar {
+          flex-wrap: wrap;
+          padding: 0.5rem 1rem;
+        }
+        
+        .navbar-actions {
+          margin-top: 0.5rem;
+          width: 100%;
+          justify-content: space-between;
+        }
+      }
+    </style>
   </head>
 
-  <body class="w-screen h-screen>
-
-    <p role="alert" class="alert alert-info"><%= notice %></p>
-    <% if alert %>
-    <p mt-4 mx-4> <div role="alert" class="alert alert-error my-2"><span><%= alert %></span></div></p>
-    <% end %>
-
-    <% if current_user %>
-    <div class="navbar bg-gray-200">
-    <div class="flex-1">
-      <% if current_user.role=="student" %>
-      <p class="btn btn-ghost text-xl text-[#163269]" >
-      <%= link_to "Welcome, #{current_user.email}",student_view_profile_path %>
-      </p>
-      <% elsif current_user.role=="hcc_in_charge" %>
-      <p class="btn btn-ghost text-xl text-[#163269]" >
-      <%= link_to "Welcome, #{current_user.email}",hcc_view_profile_path %>
-      </p>
-      <% elsif current_user.role=="dsw" %>
-      <p class="btn btn-ghost text-xl text-[#163269]" >
-      <%= link_to "Welcome, #{current_user.email}",dsw_view_profile_path %>
-      </p>
+  <body>
+    <!-- Notifications -->
+    <div class="notification-container">
+      <% if notice %>
+        <div class="notification notification-info" id="notice-alert">
+          <i class="notification-icon fas fa-info-circle"></i>
+          <div class="notification-message"><%= notice %></div>
+          <button class="notification-close" onclick="this.parentElement.remove()">&times;</button>
+        </div>
+      <% end %>
+      
+      <% if alert %>
+        <div class="notification notification-error" id="error-alert">
+          <i class="notification-icon fas fa-exclamation-circle"></i>
+          <div class="notification-message"><%= alert %></div>
+          <button class="notification-close" onclick="this.parentElement.remove()">&times;</button>
+        </div>
       <% end %>
     </div>
-    <div class="flex-none">
-      <ul class="menu menu-horizontal px-1">
-        <li>
-          <%= link_to "Home",root_path %>
-        </li>
-        <li><%= form_with(url: destroy_user_session_path, method: :delete) do %>
-          <%= submit_tag "Sign Out" %>
-        <% end %></li>
-      </ul>
+
+    <% if current_user %>
+      <!-- Navigation Bar -->
+      <nav class="navbar">
+        <div class="navbar-actions">
+          <% if current_user.role == "student" %>
+            <%= link_to student_view_profile_path, class: "navbar-profile" do %>
+              <i class="fas fa-user-circle fa-lg mr-2"></i>
+              <span><%= current_user.name || current_user.email %></span>
+            <% end %>
+          <% elsif current_user.role == "hcc_in_charge" %>
+            <%= link_to hcc_view_profile_path, class: "navbar-profile" do %>
+              <i class="fas fa-user-md fa-lg mr-2"></i>
+              <span><%= current_user.name || current_user.email %></span>
+            <% end %>
+          <% elsif current_user.role == "dsw" %>
+            <%= link_to dsw_view_profile_path, class: "navbar-profile" do %>
+              <i class="fas fa-user-tie fa-lg mr-2"></i>
+              <span><%= current_user.name || current_user.email %></span>
+            <% end %>
+          <% end %>
+          
+          <%= link_to "Home", root_path, class: "navbar-link" %>
+          
+          <%= form_with(url: destroy_user_session_path, method: :delete) do %>
+            <%= button_tag type: 'submit', class: "signout-button" do %>
+              <i class="fas fa-sign-out-alt mr-1"></i> Sign Out
+            <% end %>
+          <% end %>
+        </div>
+      </nav>
+    <% end %>
+
+    <div class="content-wrapper">
+      <%= yield %>
     </div>
-    </div>
-        <% end %>
-    <%= yield %>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Auto-hide notifications after 5 seconds
+        setTimeout(function() {
+          const notices = document.querySelectorAll('.notification');
+          notices.forEach(notice => {
+            notice.style.animation = 'fadeOut 0.5s forwards';
+            setTimeout(() => notice.remove(), 500);
+          });
+        }, 5000);
+
+        // Make notifications dismissible
+        document.querySelectorAll('.notification-close').forEach(button => {
+          button.addEventListener('click', function() {
+            this.parentElement.style.animation = 'fadeOut 0.3s forwards';
+            setTimeout(() => this.parentElement.remove(), 300);
+          });
+        });
+      });
+    </script>
   </body>
 </html>

@@ -1,17 +1,285 @@
-<h3 class="text-3xl text-[#163269] mt-6 ml-4"> Requested by: <%= @appointment.student.user.name %> </h3>
+<div class="appointment-details-container">
+  <div class="page-header">
+    <h1 class="main-title">Appointment Details</h1>
+    <div class="nav-breadcrumbs">
+      <span>Student Portal</span> / <span>Appointments</span> / <span>View Details</span>
+    </div>
+  </div>
 
-<p class = "text-[#163269] ml-4 mt-4"> Reason: <%= @appointment.reason %></p>
-<p class = "text-[#163269] ml-4 "> Severity: <%= @appointment.severity %> </p>
-<p class = "text-[#163269] ml-4"> Approval Status: <%= @appointment.approved %> </p>
-<p class = "text-[#163269] ml-4"> Doctor: <%= @appointment.doctor.name %> </p>
-<p class = "text-[#163269] ml-4"> TimeSlot : <%= @appointment.time_slot.day %> <%= @appointment.time_slot.begin %> to <%= @appointment.time_slot.end %></p>
+  <div class="appointment-card">
+    <div class="card-header">
+      <h2>Appointment Information</h2>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <div class="info-label">Student Name:</div>
+        <div class="info-value"><%= @appointment.student.user.name %></div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Reason:</div>
+        <div class="info-value"><%= @appointment.reason %></div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Severity:</div>
+        <div class="info-value"><%= @appointment.severity %></div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Status:</div>
+        <div class="info-value">
+          <span class="status-badge <%= @appointment.approved ? 'approved' : 'pending' %>">
+            <%= @appointment.approved ? 'Approved' : 'Pending' %>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<p class= "text-[#163269] mt-2 ml-4">Remarks by HCC: </p>
-<textarea class = "text ml-4 textarea textarea-warning"><%= @appointment.hcc_comments %></textarea><br><br>
+  <div class="appointment-card">
+    <div class="card-header">
+      <h2>Doctor & Schedule</h2>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <div class="info-label">Doctor:</div>
+        <div class="info-value"><%= @appointment.doctor.name %></div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Day:</div>
+        <div class="info-value"><%= @appointment.time_slot.day %></div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Time:</div>
+        <div class="info-value"><%= @appointment.time_slot.begin %> to <%= @appointment.time_slot.end %></div>
+      </div>
+    </div>
+  </div>
 
-<%= form_with url: delete_student_appointment_path(@appointment), method: :delete do %>
-    <%= submit_tag "Delete appointment" ,class: "text-white btn btn-info btn-active ml-2 rounded-2xl" %>
-<% end %>
-<br>
- 
-<%= link_to "Back to Appointments",student_view_appointments_path,class: "btn btn-active btn-ghost ml-4 mt-4" %>
+  <div class="appointment-card">
+    <div class="card-header">
+      <h2>HCC Remarks</h2>
+    </div>
+    <div class="card-body">
+      <div class="remarks-container">
+        <% if @appointment.hcc_comments.present? %>
+          <%= @appointment.hcc_comments %>
+        <% else %>
+          <span class="no-remarks">No remarks provided yet</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <%= form_with url: delete_student_appointment_path(@appointment), method: :delete do %>
+      <%= submit_tag "Delete Appointment", class: "delete-button" %>
+    <% end %>
+    
+    <%= link_to "Back to Appointments", student_view_appointments_path, class: "back-button" %>
+  </div>
+</div>
+
+<style>
+  /* General Styles */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+
+  .appointment-details-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    animation: fadeIn 0.5s;
+  }
+
+  /* Page Header */
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .main-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #163269;
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-breadcrumbs {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Card Styles */
+  .appointment-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .card-header {
+    background-color: #f1f3f5;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  .card-header h2 {
+    margin: 0;
+    color: #163269;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  /* Info Row */
+  .info-row {
+    display: flex;
+    margin-bottom: 1rem;
+  }
+
+  .info-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .info-label {
+    width: 120px;
+    font-weight: 600;
+    color: #495057;
+  }
+
+  .info-value {
+    flex-grow: 1;
+    color: #212529;
+  }
+
+  /* Status Badge */
+  .status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .status-badge.pending {
+    background-color: #ffc107;
+    color: #212529;
+  }
+
+  .status-badge.approved {
+    background-color: #198754;
+    color: white;
+  }
+
+  /* Remarks */
+  .remarks-container {
+    background-color: #f8f9fa;
+    padding: 1.25rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #212529;
+    line-height: 1.6;
+    border-left: 4px solid #dee2e6;
+  }
+
+  .no-remarks {
+    color: #6c757d;
+    font-style: italic;
+  }
+
+  /* Action Buttons */
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .delete-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .delete-button:hover {
+    background-color: #bb2d3b;
+  }
+
+  .back-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #f8f9fa;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .back-button:hover {
+    background-color: #e9ecef;
+    color: #212529;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .info-row {
+      flex-direction: column;
+      margin-bottom: 1.25rem;
+    }
+
+    .info-label {
+      margin-bottom: 0.25rem;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+    }
+
+    .delete-button, .back-button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add animation for cards
+    const cards = document.querySelectorAll('.appointment-card');
+    
+    cards.forEach((card, index) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 100 * (index + 1));
+    });
+  });
+</script>

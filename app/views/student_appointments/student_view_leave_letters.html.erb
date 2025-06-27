@@ -1,17 +1,230 @@
-<h1 class="mt-4 ml-4 text-3xl text-[#163269]">Manage Leave letters - </h1>
+<div class="leave-letters-container">
+  <h1 class="section-heading">Manage Leave Letters</h1>
 
-<div class="ml-10 mt-4">
-<ul class="list-decimal">
-<% @all_appointments.each do |app| %>
-<li><%= app.reason %>
-<% if app.leave_letter %>
-<%= link_to "View leave letter",student_view_particular_leave_letter_path(app.leave_letter), class: "btn btn-outline btn-ghost btn-xs" %>
-<% else %>
-<%= link_to "Create Leave letter",student_new_leave_letter_path(appoint_id: app.id), class: "btn btn-outline btn-ghost btn-xs" %>
-<% end %>
-</li> <br>
-<% end %>
-</ul>
+  <% if @all_appointments.any? %>
+    <ul class="appointments-list">
+      <% @all_appointments.each do |app| %>
+        <li class="appointment-item">
+          <div class="appointment-info">
+            <span class="appointment-reason"><%= app.reason %></span>
+            <% if app.leave_letter %>
+              <div class="badge-container">
+                <span class="status-badge">Leave letter created</span>
+              </div>
+            <% end %>
+          </div>
+          <div class="action-button">
+            <% if app.leave_letter %>
+              <%= link_to "View leave letter", student_view_particular_leave_letter_path(app.leave_letter), class: "view-button" %>
+            <% else %>
+              <%= link_to "Create leave letter", student_new_leave_letter_path(appoint_id: app.id), class: "create-button" %>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="empty-message">You have no appointments to create leave letters for.</div>
+  <% end %>
+
+  <div class="back-link">
+    <%= link_to "Back to dashboard", root_path, class: "back-button" %>
+  </div>
 </div>
 
-<%= link_to "Back to dashboard",root_path, class: "btn btn-active btn-ghost ml-4" %>
+<style>
+  /* General Styles */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+
+  .leave-letters-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    animation: fadeIn 0.5s;
+  }
+
+  /* Headings */
+  .section-heading {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #163269;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  /* Appointments List */
+  .appointments-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 1.5rem 0;
+  }
+
+  .appointment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+  }
+
+  .appointment-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .appointment-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .appointment-reason {
+    font-size: 1.1rem;
+    color: #343a40;
+    font-weight: 500;
+  }
+
+  /* Badge Styles */
+  .badge-container {
+    margin-top: 0.25rem;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background-color: #198754;
+    color: white;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  /* Button Styles */
+  .action-button {
+    margin-left: 1rem;
+  }
+
+  .view-button, .create-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .view-button {
+    background-color: #e9ecef;
+    color: #212529;
+    border: 1px solid #ced4da;
+  }
+
+  .view-button:hover {
+    background-color: #ced4da;
+  }
+
+  .create-button {
+    background-color: #0d6efd;
+    color: white;
+    border: 1px solid #0d6efd;
+  }
+
+  .create-button:hover {
+    background-color: #0b5ed7;
+  }
+
+  .back-button {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background-color: #f8f9fa;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .back-button:hover {
+    background-color: #e9ecef;
+    color: #212529;
+  }
+
+  .back-link {
+    margin-top: 2rem;
+  }
+
+  /* Empty State */
+  .empty-message {
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.1rem;
+    margin: 2rem 0;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 640px) {
+    .appointment-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .action-button {
+      margin-left: 0;
+      margin-top: 1rem;
+      align-self: flex-start;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add animation to list items on page load
+    const items = document.querySelectorAll('.appointment-item');
+    
+    items.forEach((item, index) => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        item.style.opacity = '1';
+        item.style.transform = 'translateY(0)';
+      }, 100 * (index + 1));
+    });
+
+    // Add hover effect to appointment items
+    items.forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        this.style.backgroundColor = '#f8f9fa';
+      });
+      
+      item.addEventListener('mouseleave', function() {
+        this.style.backgroundColor = 'white';
+      });
+    });
+  });
+</script>
