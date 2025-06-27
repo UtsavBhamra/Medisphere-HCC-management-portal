@@ -98,23 +98,27 @@ rails assets:precompile
 
 1. Clone the repo to your local pc and cd into the directory.
 2. Set the ruby version to `v3.3.5` using your version manager.
-3. Install all the gems in the Gemfile
+3. Install dependencies 
+```bash
+npm install
+```
+4. Install all the gems in the Gemfile
 ```bash
 bundle install
 ```
-4. Make the migrations
+5. Make the migrations
 ```bash
 rails db:migrate
 ```
-5. Pre Compile the CSS 
+6. Pre Compile the CSS 
 ```bash
 rails assets:precompile
 ```
-6. Run the server
+7. Run the server
 ```bash
 bin/dev
 ```
-7.Access the application at http://localhost:3000
+8. Access the application at http://localhost:3000
 
 _**Note**: The current docker setup does not support live reloading of CSS. You need to precompile the assets (See step 2 in docker setup) and then rebuild the images and containers for the changes to be reflected. However, this is not an issue with local setup as it uses the bin/dev script_
 
