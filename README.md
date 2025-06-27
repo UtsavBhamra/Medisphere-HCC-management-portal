@@ -23,6 +23,10 @@ Often, Students have to wait for their turn at the Health Care Center and it is 
 
 What if this can be done digitally? This is the core idea of the HCC module. The module will allow students to book appointments online based on the Doctor’s availability. Additionally, students can generate a leave/absence letter that goes through two levels of approval —first from the HCC in charge and then from the Dean of Student Welfare. The system should notify the relevant approvers when a new leave slip is awaiting approval. Once fully approved, the student will receive a confirmation with the signed leave slip. 
 
+**[View Live Application](https://hcc-module.onrender.com)**
+
+Experience the HCC Module in action! The application is deployed and ready to use with all features available.
+
 
 <p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
 
