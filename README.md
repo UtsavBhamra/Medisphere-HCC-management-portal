@@ -5,35 +5,31 @@
   <summary>Table of Contents</summary>
   
   - [About the Project](#about-the-project)
+  - [Built With](#built-with)
   - [Video](#video)
   - [Getting Started](#getting-started)
-  - [List of Implemented feautures](#list-of-implemented-features)
-  - [List of Non Implemented/Planned Features](#list-of-non-implementedplanned-features)
-  - [List of Known Bugs](#list-of-known-bugs)
-  - [References used](#references-used)
-  - [Other projects](#other-projects)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+  - [List of Implemented Features](#list-of-implemented-features)
+  - [List of Non-Implemented/Planned Features](#list-of-non-implementedplanned-features)
+  - [References Used](#references-used)
+  - [Other Projects](#other-projects)
 </details>
-
-
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
 Often, Students have to wait for their turn at the Health Care Center and it is a long process to get the leave/absence letter signed by the authorities to get attendance for classes missed due to medical reasons.
 
-What if this can be done digitally? This is the core idea of the HCC module. The module will allow students to book appointments online based on the Doctor’s availability. Additionally, students can generate a leave/absence letter that goes through two levels of approval —first from the HCC in charge and then from the Dean of Student Welfare. The system should notify the relevant approvers when a new leave slip is awaiting approval. Once fully approved, the student will receive a confirmation with the signed leave slip. 
+What if this can be done digitally? This is the core idea of the Medisphere portal. The module will allow students to book appointments online based on the Doctor's availability. Additionally, students can generate a leave/absence letter that goes through two levels of approval —first from the HCC in charge and then from the Dean of Student Welfare. The system should notify the relevant approvers when a new leave slip is awaiting approval. Once fully approved, the student will receive a confirmation with the signed leave slip. 
 
 **[View Live Application](https://hcc-module.onrender.com)**
 
-Experience the HCC Module in action! The application is deployed and ready to use with all features available.
+Experience the Medisphere portal in action! The application is deployed and ready to use with all features available.
 
-
-<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
-
-
+<p align="right">(<a href="#medisphere--all-in-one-portal-for-health-care-center-management">back to top</a>)</p>
 
 ### Built With
-
 
 * [![Rails][Rails]][Rails-url]
 * [![Ruby][Ruby]][Ruby-url]
@@ -42,8 +38,7 @@ Experience the HCC Module in action! The application is deployed and ready to us
 * [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
 * [![DaisyUI][DaisyUI]][DaisyUI-url]
 
-<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
-
+<p align="right">(<a href="#medisphere--all-in-one-portal-for-health-care-center-management">back to top</a>)</p>
 
 <!-- Video -->
 ## Video
@@ -54,7 +49,7 @@ Experience the HCC Module in action! The application is deployed and ready to us
 
 Both the links point to the same video. In case both the links don't work, please contact me through whatsapp/email or any other means.
 
-<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
+<p align="right">(<a href="#medisphere--all-in-one-portal-for-health-care-center-management">back to top</a>)</p>
 
 ## Getting Started
 
@@ -64,37 +59,36 @@ The prerequisites and installation instructions are listed in this section
 
 There are two ways to set up the app- either through docker (this method enables load balancing and other nginx features) or a local setup (better for development as live css reloading is enabled)
 
-#### Docker -
+#### Docker
 
 1. [Install docker engine](https://docs.docker.com/engine/install/)
 2. [Install docker compose](https://docs.docker.com/compose/install/)
 
-#### Local setup-
+#### Local setup
 
 1. Ruby `v3.3.5`
 2. Ruby on Rails `v7.2.1`
 3. NPM and nodejs
 4. A ruby version manager (not compulsory), preferably `rvm` or `rbenv`
  
-<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
+<p align="right">(<a href="#medisphere--all-in-one-portal-for-health-care-center-management">back to top</a>)</p>
 
 ### Installation
 
-
-#### Using Docker-compose -
+#### Using Docker-compose
 
 1. Clone the repo to your local pc and cd into the directory.
 2. Precompile the CSS
 ```bash
 rails assets:precompile
 ```
-2. Enter the following command to fire up all the containers. 
-  ```bash
-  docker compose up
-  ```
-3. Access the application at http://localhost:80
+3. Enter the following command to fire up all the containers. 
+```bash
+docker compose up
+```
+4. Access the application at http://localhost:80
 
-#### Local Setup -
+#### Local Setup
 
 1. Clone the repo to your local pc and cd into the directory.
 2. Set the ruby version to `v3.3.5` using your version manager.
@@ -122,17 +116,16 @@ bin/dev
 
 _**Note**: The current docker setup does not support live reloading of CSS. You need to precompile the assets (See step 2 in docker setup) and then rebuild the images and containers for the changes to be reflected. However, this is not an issue with local setup as it uses the bin/dev script_
 
-<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
-
+<p align="right">(<a href="#medisphere--all-in-one-portal-for-health-care-center-management">back to top</a>)</p>
 
 <!-- List of Implemented Features -->
-## List of implemented features
+## List of Implemented Features
 
 <details>
 <summary><strong>Authentication and Authorization</strong></summary>
 
-1. User authentication with `devise` - Allowing users of all 3 roles- teacher,student and dsw to register, log in and logout from the website
-2. Authorization and RBAC- There are three types of users on the site (students, HCC In Charge and DSW), having different permissions
+1. User authentication with the `devise` gem - Allowing users of all 3 roles- teacher, student and dsw to register, log in and logout from the website
+2. Authorization and Role Based Access Control- There are three types of users on the site (students, HCC In Charge and DSW), having different permissions
 
 </details>
 
@@ -157,7 +150,7 @@ _**Note**: The current docker setup does not support live reloading of CSS. You 
 2. Appointments Page to view requested and approved appointments
 3. Individual Appointment with details and options to add comments, approve or mark as visited
 4. Leave letter page to view requested and forwarded leave letters 
-5. Indivisual leave letter pages to view deatils and forward/ comment on leave letters
+5. Individual leave letter pages to view details and forward/ comment on leave letters
 6. Doctors and time slots management page with all controls
 7. Forms to add doctors and time slots
 
@@ -166,15 +159,16 @@ _**Note**: The current docker setup does not support live reloading of CSS. You 
 <details>
 <summary><strong>DSW Side</strong></summary>
 
-1. Page to view all leave letters 
-2. Page to view individual leave letters and comment/approve the letter
+1. Landing page/ Dashboard with links to all features
+2. Page to view all leave letters 
+3. Page to view individual leave letters and comment/approve the letter
 
 </details>
 
 <details>
 <summary><strong>Containerization</strong></summary>
 
-Dockerized the web app to ensure availabilty across different operating systems and environments and to ensure easy local installation.
+Dockerized the web app to ensure availability across different operating systems and environments and to ensure easy local installation.
 
 </details>
 
@@ -188,33 +182,25 @@ Dockerized the web app to ensure availabilty across different operating systems 
 
 </details>
 
-<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
+<p align="right">(<a href="#medisphere--all-in-one-portal-for-health-care-center-management">back to top</a>)</p>
 
-<!-- List of non-implemented/planned features -->
-## List of non-implemented/planned features
+<!-- List of Non-Implemented/Planned Features -->
+## List of Non-Implemented/Planned Features
 
-1. <strong>Improve the UI</strong> - For the task , I just created a basic frontend with daisy UI components, which has a lot of scope for improvement. Dark Mode support also can be added
-2. <strong>Implement a pharmacy submodule </strong>, showing list of availble medicines, timings etc. We can further scale this up to support online ordering of medicines and then getting it delivered through changepay to hostels.
-3. <strong>Implement mailer system</strong> for all functions (need to sort out issues with my gmail)
+1. <strong>Improve the UI</strong> - The current frontend is mostly built with HTML, vanilla CSS, JS and Tailwind and has scope for improvement. Dark Mode support also can be added
+2. <strong>Implement a pharmacy submodule</strong>, showing list of available medicines, timings etc. We can further scale this up to support online ordering of medicines and then getting it delivered through changepay to hostels.
+3. <strong>Implement mailer system</strong> for all functions
 4. Add a <strong>dedicated page</strong> to view Doctor's details, specializations and emergency contact numbers.
 
+<p align="right">(<a href="#medisphere--all-in-one-portal-for-health-care-center-management">back to top</a>)</p>
 
-<!-- List of known bugs -->
-## List of known bugs
-
-1. While running the app through docker/docker-compose, any tailwind classes added do not generate the correspondng CSS. We need to run the tailwind:watch script as well but that was causing some issues with my docker setup.
-2. In the student appointment creation page, for the time slot select to work, the page needs to be reloaded once
-
-
-<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
-
-<!-- References used -->
+<!-- References Used -->
 ## References Used
 
 * [Rails docs](https://guides.rubyonrails.org/)
 * [IRIS Bootcamp](https://github.com/IRIS-NITK/IRIS-RoR-Bootcamp-2022)
 * [Devise](https://github.com/heartcombo/devise)
-* [Tailwind CSS ](https://tailwindcss.com/docs/installation)
+* [Tailwind CSS](https://tailwindcss.com/docs/installation)
 * [Daisy UI](https://daisyui.com/docs/install/)
 * [Docker](https://docs.docker.com/)
 * [Nginx](https://www.javatpoint.com/nginx-tutorial)
@@ -222,36 +208,27 @@ Dockerized the web app to ensure availabilty across different operating systems 
 * Lots of [Medium](https://medium.com/) and [DEV Community](https://dev.to/) articles 
 * [Reddit](https://www.reddit.com/) and [Stack Overflow](https://stackoverflow.com/)
 
-<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
+<p align="right">(<a href="#medisphere--all-in-one-portal-for-health-care-center-management">back to top</a>)</p>
 
 <!-- Other Projects -->
 ## Other Projects
 
-1. [Course registration Platform with Django](https://github.com/UtsavBhamra/course-registration-platform)
-2. [Blog site and Blog migration for IEEE NITK Corpus](https://github.com/UtsavBhamra/ieee_corpus_blog)
+1. [ServerLord - Cron Job Monitoring Platform](https://github.com/UtsavBhamra/server-lord)
+2. [Course registration Platform with Django](https://github.com/UtsavBhamra/course-registration-platform)
+3. [Blog site and Blog migration for IEEE NITK Corpus](https://github.com/UtsavBhamra/ieee_corpus_blog)
 
-
-<p align="right">(<a href="#hcc-module---iris-code-in-task">back to top</a>)</p>
-
-
-
+<p align="right">(<a href="#medisphere--all-in-one-portal-for-health-care-center-management">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[Rails]: https://img.shields.io/badge/rails-CC0000?style=for-the-badge&logo=ruby-on-rails&logoColor=white
-[Rails-url]: https://rubyonrails.org
-
-[Ruby]: https://img.shields.io/badge/ruby-CC342D?style=for-the-badge&logo=ruby&logoColor=white
-[Ruby-url]: https://www.ruby-lang.org
-
-[TailwindCSS]: https://img.shields.io/badge/tailwindcss-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
-[TailwindCSS-url]: https://tailwindcss.com
-
-[DaisyUI]: https://img.shields.io/badge/daisyUI-5A67D8?style=for-the-badge&logo=daisyui&logoColor=white
-[DaisyUI-url]: https://daisyui.com
-
-[Docker]: https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
-[Docker-url]: https://www.docker.com
-
-[Nginx]: https://img.shields.io/badge/nginx-269539?style=for-the-badge&logo=nginx&logoColor=white
-[Nginx-url]: https://www.nginx.com
+[Rails]: https://img.shields.io/badge/Ruby_on_Rails-CC0000?style=for-the-badge&logo=ruby-on-rails&logoColor=white
+[Rails-url]: https://rubyonrails.org/
+[Ruby]: https://img.shields.io/badge/Ruby-CC342D?style=for-the-badge&logo=ruby&logoColor=white
+[Ruby-url]: https://www.ruby-lang.org/
+[Docker]: https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white
+[Docker-url]: https://www.docker.com/
+[Nginx]: https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white
+[Nginx-url]: https://nginx.org/
+[TailwindCSS]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
+[TailwindCSS-url]: https://tailwindcss.com/
+[DaisyUI]: https://img.shields.io/badge/DaisyUI-5A0EF8?style=for-the-badge&logo=daisyui&logoColor=white
+[DaisyUI-url]: https://daisyui.com/
